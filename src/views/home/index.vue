@@ -1,9 +1,9 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: 何俊杰
+ - @LastEditor: 何俊杰
  - @LastEditTime: 2023/12/05 21:28:22
- - @Email: zclzone@outlook.com
- - Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ - @Email: junjie.he.925@gmail.com
+ - Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
  --------------------------------->
 
 <template>
@@ -31,7 +31,7 @@
       <n-card class="ml-12 w-70%" :title="$t('page.home.welcome.title')">
         <template #header-extra>
           <a
-            class="text-14 text-primary text-highlight hover:underline hover:opacity-80" href="https://isme.top"
+            class="text-14 text-primary text-highlight hover:underline hover:opacity-80" href="https://hejunjie.life"
             target="_blank" @click.prevent="message?.info($t('page.home.welcome.websiteInDevelopment'))"
           >
             isme.top
@@ -42,7 +42,7 @@
           {{ $t('page.home.welcome.description') }}
         </p>
         <footer class="mt-12 flex items-center justify-end">
-          <n-button type="primary" ghost tag="a" href="https://isme.top" target="__blank">
+          <n-button type="primary" ghost tag="a" href="https://hejunjie.life" target="__blank">
             {{ $t('page.home.welcome.developmentDocs') }}
           </n-button>
           <n-button
@@ -119,7 +119,7 @@
           <p class="text-14 opacity-60">
             👉 {{ $t('page.home.features.click') }}
             <b class="mx-2 transition hover:text-primary">
-              <a href="https://isme.top" target="_blank">{{ $t('page.home.features.moreLink') }}</a>
+              <a href="https://hejunjie.life" target="_blank">{{ $t('page.home.features.moreLink') }}</a>
             </b>
             {{ $t('page.home.features.viewMore') }}
           </p>

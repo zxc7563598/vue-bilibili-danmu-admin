@@ -1,12 +1,12 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: 何俊杰
+ - @LastEditor: 何俊杰
  - @LastEditTime: 2024/03/04 16:09:47
- - @Email: zclzone@outlook.com
- - Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ - @Email: junjie.he.925@gmail.com
+ - Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
  --------------------------------->
 <template>
   <div class="h-32 w-32 rounded-4 bg-primary">
-    <img src="@/assets/images/isme.png" alt="Logo">
+    <img src="@/assets/images/bilibili-fill.png" alt="Logo">
   </div>
 </template>

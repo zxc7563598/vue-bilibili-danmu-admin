@@ -1,9 +1,9 @@
 /**********************************
- * @Author: Ronnie Zhang
- * @LastEditor: Ronnie Zhang
+ * @Author: 何俊杰
+ * @LastEditor: 何俊杰
  * @LastEditTime: 2024/01/06 17:18:40
- * @Email: zclzone@outlook.com
- * Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ * @Email: junjie.he.925@gmail.com
+ * Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
  **********************************/
 
 import { defineStore } from 'pinia'

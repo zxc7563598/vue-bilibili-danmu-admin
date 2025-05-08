@@ -1,9 +1,9 @@
 <!--------------------------------
- - @Author: Ronnie Zhang
- - @LastEditor: Ronnie Zhang
+ - @Author: 何俊杰
+ - @LastEditor: 何俊杰
  - @LastEditTime: 2023/12/05 21:28:36
- - @Email: zclzone@outlook.com
- - Copyright © 2023 Ronnie Zhang(大脸怪) | https://isme.top
+ - @Email: junjie.he.925@gmail.com
+ - Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
  --------------------------------->
 
 <template>
@@ -15,7 +15,7 @@
 
       <div class="w-320 flex-col px-20 py-32">
         <h2 class="f-c-c text-24 text-#6a6a6a font-normal">
-          <img src="@/assets/images/logo.png" class="mr-12 h-50">
+          <img src="@/assets/images/logo.ico" class="mr-12 h-50">
           {{ title }}
         </h2>
         <n-input
