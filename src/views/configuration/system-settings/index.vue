@@ -10,7 +10,7 @@
   <AppPage show-footer>
     <div v-if="!configLoading" class="flex">
       <!-- 功能模块 -->
-      <div class="min-w-400">
+      <div class="min-w-400 flex-1">
         <!-- 功能模块：商城配置 -->
         <div ref="storeConfigRef">
           <n-card id="storeConfig" title="商城配置">
@@ -450,7 +450,7 @@ async function setConfig() {
     $message.success('保存成功')
   }
   catch (err) {
-    console.error('存储用户信息失败', err)
+    console.error('存储配置信息失败', err)
   }
   finally {
     setConfigLoading.value = false
