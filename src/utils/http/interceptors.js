@@ -46,22 +46,31 @@ function reqResolve(config) {
   }
   // 添加 Accept-Language 头参数
   config.headers['Accept-Language'] = lStorage.get('locale') || 'zh'
-  // 加密请求参数
-  if (config.data === undefined) {
-    config.data = {}
+  if (config.file !== true) {
+    // 加密请求参数
+    if (config.data === undefined) {
+      config.data = {}
+    }
+    const secretKey = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_AES_KEY) // 16字节的密钥
+    const iv = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_AES_IV) // 16字节的初始化向量
+    let param = config.data
+    if (config.removeEmpty !== false) {
+      param = removeEmptyValues(config.data)
+    }
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(param), secretKey, {
+      iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    })
+    const en_data = encrypted.toString()
+    const timestamp = Math.floor(Date.now() / 1000)
+    const signKey = import.meta.env.VITE_SIGN_KEY
+    const sign = CryptoJS.MD5(signKey + timestamp).toString()
+    config.data = { en_data, timestamp, sign }
   }
-  const secretKey = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_AES_KEY) // 16字节的密钥
-  const iv = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_AES_IV) // 16字节的初始化向量
-  const encrypted = CryptoJS.AES.encrypt(JSON.stringify(removeEmptyValues(config.data)), secretKey, {
-    iv,
-    mode: CryptoJS.mode.CBC,
-    padding: CryptoJS.pad.Pkcs7,
-  })
-  const en_data = encrypted.toString()
-  const timestamp = Math.floor(Date.now() / 1000)
-  const signKey = import.meta.env.VITE_SIGN_KEY
-  const sign = CryptoJS.MD5(signKey + timestamp).toString()
-  config.data = { en_data, timestamp, sign }
+  else {
+    config.headers['Content-Type'] = 'multipart/form-data'
+  }
   return config
 }
 
