@@ -379,7 +379,9 @@ function scrollToElement(elementRef) {
 }
 
 // 调用API接口获取用户信息
+const configLoading = ref(false)
 async function getData() {
+  configLoading.value = true
   try {
     const { data = [] } = await api.getData()
     configForm.value.shop_name = data.shop_name
@@ -401,6 +403,7 @@ async function getData() {
     configForm.value.db_name = data.db_name
     configForm.value.db_password = data.db_password
     await getDataQrcode(configForm.value.shop_url)
+    configLoading.value = false
   }
   catch (err) {
     console.error('获取用户信息失败', err)
