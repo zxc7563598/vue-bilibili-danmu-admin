@@ -1,11 +1,3 @@
-/**********************************
- * @Author: 何俊杰
- * @LastEditor: 何俊杰
- * @LastEditTime: 2024/01/13 17:41:26
- * @Email: junjie.he.925@gmail.com
- * Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
- **********************************/
-
 // 获取元素的CSS样式
 function getCss(element, key) {
   return element.currentStyle
