@@ -1,11 +1,3 @@
-/**********************************
- * @Author: 何俊杰
- * @LastEditor: 何俊杰
- * @LastEditTime: 2023/12/05 21:25:31
- * @Email: junjie.he.925@gmail.com
- * Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
- **********************************/
-
 import { defaultLayout, defaultPrimaryColor, naiveThemeOverrides } from '@/settings'
 import { generate, getRgbStr } from '@arco-design/color'
 import { useDark } from '@vueuse/core'

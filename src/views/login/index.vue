@@ -1,11 +1,3 @@
-<!--------------------------------
- - @Author: 何俊杰
- - @LastEditor: 何俊杰
- - @LastEditTime: 2023/12/05 21:28:36
- - @Email: junjie.he.925@gmail.com
- - Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
- --------------------------------->
-
 <template>
   <div class="wh-full flex-col bg-[url(@/assets/images/login_bg.webp)] bg-cover">
     <div class="m-auto max-w-700 min-w-345 f-c-c rounded-8 bg-opacity-20 bg-cover p-12 card-shadow auto-bg">

@@ -1,11 +1,3 @@
-<!--------------------------------
- - @Author: 何俊杰
- - @LastEditor: 何俊杰
- - @LastEditTime: 2023/12/12 09:03:32
- - @Email: junjie.he.925@gmail.com
- - Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
- --------------------------------->
-
 <template>
   <MeModal ref="modalRef" :title="$t('layouts.components.RoleSelect.tips')" width="360px" class="p-12">
     <n-radio-group v-model:value="roleCode" class="cus-scroll-y max-h-420 w-full py-16">

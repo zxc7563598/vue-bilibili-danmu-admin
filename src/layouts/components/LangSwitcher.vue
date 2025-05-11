@@ -1,11 +1,3 @@
-<!--------------------------------
- - @Author: Junjie He
- - @LastEditor: Junjie He
- - @LastEditTime: 2025/03/24 16:14:39
- - @Email: junjie.he.925@gmail.com
- - Copyright © 2025 Junjie He | https://hejunjie.life
- --------------------------------->
-
 <template>
   <n-dropdown :options="options" @select="handleSelect">
     <i

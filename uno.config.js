@@ -1,11 +1,3 @@
-/**********************************
- * @Author: 何俊杰
- * @LastEditor: 何俊杰
- * @LastEditTime: 2023/12/05 21:30:57
- * @Email: junjie.he.925@gmail.com
- * Copyright © 2025 星河避难所(何俊杰) | https://hejunjie.life
- **********************************/
-
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import presetRemToPx from '@unocss/preset-rem-to-px'
 import { defineConfig, presetAttributify, presetIcons, presetWind3 } from 'unocss'
