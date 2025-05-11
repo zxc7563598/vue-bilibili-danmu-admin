@@ -558,6 +558,7 @@ function checkGoods(item = {}) {
         return false
       }
       await setDataDetails()
+      $table.value.handleSearch()
     },
   })
 }
@@ -594,6 +595,7 @@ function handleAdd() {
         return false
       }
       await setDataDetails()
+      $table.value.handleSearch()
     },
   })
 }

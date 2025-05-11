@@ -1,23 +1,22 @@
 <template>
-  <n-config-provider
-    class="wh-full"
-    :locale="zhCN"
-    :date-locale="dateZhCN"
-    :theme="appStore.isDark ? darkTheme : undefined"
-    :theme-overrides="appStore.naiveThemeOverrides"
-  >
-    <router-view v-if="Layout" v-slot="{ Component, route: curRoute }">
-      <component :is="Layout">
-        <transition name="fade-slide" mode="out-in" appear>
-          <KeepAlive :include="keepAliveNames">
-            <component :is="Component" v-if="!tabStore.reloading" :key="curRoute.fullPath" />
-          </KeepAlive>
-        </transition>
-      </component>
+  <n-dialog-provider>
+    <n-config-provider
+      class="wh-full" :locale="zhCN" :date-locale="dateZhCN"
+      :theme="appStore.isDark ? darkTheme : undefined" :theme-overrides="appStore.naiveThemeOverrides"
+    >
+      <router-view v-if="Layout" v-slot="{ Component, route: curRoute }">
+        <component :is="Layout">
+          <transition name="fade-slide" mode="out-in" appear>
+            <KeepAlive :include="keepAliveNames">
+              <component :is="Component" v-if="!tabStore.reloading" :key="curRoute.fullPath" />
+            </KeepAlive>
+          </transition>
+        </component>
 
-      <LayoutSetting v-if="layoutSettingVisible" class="fixed right-12 top-1/2 z-999" />
-    </router-view>
-  </n-config-provider>
+        <LayoutSetting v-if="layoutSettingVisible" class="fixed right-12 top-1/2 z-999" />
+      </router-view>
+    </n-config-provider>
+  </n-dialog-provider>
 </template>
 
 <script setup>
