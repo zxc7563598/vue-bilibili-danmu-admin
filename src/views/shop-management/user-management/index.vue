@@ -335,6 +335,7 @@ async function resetPassword() {
 const [$checkUserPoint] = useModal()
 const editUserPointUserId = ref(0)
 function checkUserPoint(item = {}) {
+  pointTableData.value = []
   api.getUserRecords(item.user_id).then(({ data = [] }) => {
     pointTableData.value = data.records
     editUserPointUserId.value = item.user_id

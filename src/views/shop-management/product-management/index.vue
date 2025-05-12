@@ -233,7 +233,7 @@ defineOptions({ name: 'ShopManagementProductManagement' })
 const $table = ref(null)
 const queryItems = ref({
   name: '',
-  type: '',
+  type: null,
 })
 const tableColumns = [
   {
