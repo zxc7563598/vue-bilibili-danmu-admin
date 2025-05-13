@@ -289,6 +289,16 @@ function checkUser(item = {}) {
         $message.error('您没有权限变更用户信息')
         return false
       }
+      await editItemsRef.value?.validate((errors) => {
+        if (errors) {
+          errors.forEach((_errors) => {
+            _errors.forEach((item) => {
+              $message.error(item.message)
+            })
+          })
+          return false
+        }
+      })
       await setData()
       $table.value.handleSearch()
     },
