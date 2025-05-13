@@ -108,7 +108,7 @@ const initQuery = { ...props.queryItems }
 const tableData = ref([])
 const pagination = reactive({
   page: 1,
-  pageSize: 10,
+  pageSize: 30,
   prefix({ itemCount }) {
     return t('common.PaginationTotals', { total: itemCount })
   },
