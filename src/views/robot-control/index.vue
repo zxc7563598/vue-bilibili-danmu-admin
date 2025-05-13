@@ -136,10 +136,10 @@
             </n-alert>
 
             <n-form
-              :model="checkInForm" :rules="checkInRules" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              ref="checkInFormRef" :model="checkInForm" :rules="checkInRules" label-placement="left"
+              label-width="auto" require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="状态" path="status">
+              <n-form-item label="状态" path="status" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="checkInForm.status" name="checkInForm-status">
                   <n-radio-button value="0">
                     不论何时
@@ -152,7 +152,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="类型" path="type">
+              <n-form-item label="类型" path="type" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="checkInForm.type" name="checkInForm-type">
                   <n-radio-button value="0">
                     全部
@@ -165,21 +165,21 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="签到词" path="keywords">
+              <n-form-item label="签到词" path="keywords" feedback-style="margin-bottom: 20px;">
                 <n-input v-model:value="checkInForm.keywords" placeholder="一般建议增加符号避免误触发，例如: #签到" />
               </n-form-item>
-              <n-form-item label="赠送积分" path="points">
+              <n-form-item label="赠送积分" path="points" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="checkInForm.points" type="text" :allow-input="onlyAllowNumber"
                   placeholder="为 0 则不赠送"
                 />
               </n-form-item>
-              <n-form-item label="查询词" path="select">
+              <n-form-item label="查询词" path="select" feedback-style="margin-bottom: 20px;">
                 <n-input v-model:value="checkInForm.select" placeholder="一般建议增加符号避免误触发，例如: #查询">
                   <template #password-visible-icon />
                 </n-input>
               </n-form-item>
-              <n-form-item label="成功回复" path="success">
+              <n-form-item label="成功回复" path="success" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="checkInForm.success"
                   placeholder="支持设置多条信息，每条用换行分隔。每次触发时系统会随机选取一条进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。"
@@ -189,7 +189,7 @@
                   }"
                 />
               </n-form-item>
-              <n-form-item label="查询回复" path="reply">
+              <n-form-item label="查询回复" path="reply" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="checkInForm.reply"
                   placeholder="支持设置多条信息，每条用换行分隔。每次触发时系统会随机选取一条进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。"
@@ -253,10 +253,10 @@
             </n-alert>
 
             <n-form
-              :model="pkForm" :rules="pkRules" label-placement="left" label-width="auto"
+              ref="pkFormRef" :model="pkForm" :rules="pkRules" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="播报内容" path="content">
+              <n-form-item label="播报内容" path="content" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="pkForm.content"
                   placeholder="支持设置多条信息，每条用换行分隔。每次触发时按顺序从上往下进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。"
@@ -304,16 +304,16 @@
               <p>由于 B 站的限制，弹幕发送间隔不能低于 3 秒，通常建议将间隔时间设置为 5 秒以上，以避免触发风控问题。</p>
             </n-alert>
             <n-form
-              :model="timingForm" :rules="timingRules" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              ref="timingFormRef" :model="timingForm" :rules="timingRules" label-placement="left"
+              label-width="auto" require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="间隔时间" path="intervals">
+              <n-form-item label="间隔时间" path="intervals" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="timingForm.intervals" type="text" :allow-input="onlyAllowNumber"
-                  placeholder="间隔不允许低于 3 秒"
+                  placeholder="间隔不允许低于10 秒"
                 />
               </n-form-item>
-              <n-form-item label="状态" path="status">
+              <n-form-item label="状态" path="status" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="timingForm.status" name="timingForm-status">
                   <n-radio-button value="0">
                     不论何时
@@ -326,7 +326,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="发送内容" path="content">
+              <n-form-item label="发送内容" path="content" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="timingForm.content"
                   placeholder="支持设置多条信息，每条用换行分隔。每次触发时系统会随机选取一条进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。"
@@ -393,10 +393,10 @@
               <p>建议控制留言发言的长度，过长的信息可能会被拆分成多条发送，且由于发言频率限制，可能会影响用户体验。</p>
             </n-alert>
             <n-form
-              :model="presentForm" :rules="presentRules" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              ref="presentFormRef" :model="presentForm" :rules="presentRules" label-placement="left"
+              label-width="auto" require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="展示数量" path="number">
+              <n-form-item label="展示数量" path="number" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="presentForm.number" name="presentForm-number">
                   <n-radio-button value="0">
                     不展示
@@ -406,7 +406,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="礼物合并" path="merge">
+              <n-form-item label="礼物合并" path="merge" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="presentForm.merge" name="presentForm-merge">
                   <n-radio-button value="0">
                     不合并
@@ -416,13 +416,13 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="起始感谢电池" path="price">
+              <n-form-item label="起始感谢电池" path="price" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="presentForm.price" type="text" :allow-input="onlyAllowNumber"
                   placeholder="为 0 则全部感谢"
                 />
               </n-form-item>
-              <n-form-item label="状态" path="status">
+              <n-form-item label="状态" path="status" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="presentForm.status" name="presentForm-status">
                   <n-radio-button value="0">
                     不论何时
@@ -435,7 +435,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="类型" path="type">
+              <n-form-item label="类型" path="type" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="presentForm.type" name="presentForm-type">
                   <n-radio-button value="0">
                     全部感谢
@@ -448,7 +448,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="发送内容" path="content">
+              <n-form-item label="发送内容" path="content" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="presentForm.content"
                   placeholder="支持设置多条信息，每条用换行分隔。每次触发时系统会随机选取一条进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。"
@@ -504,10 +504,10 @@
               <p>名称：<b>@name@</b></p>
             </n-alert>
             <n-form
-              :model="enterForm" :rules="enterRules" label-placement="left" label-width="auto"
+              ref="enterFormRef" :model="enterForm" :rules="enterRules" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="状态" path="status">
+              <n-form-item label="状态" path="status" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="enterForm.status" name="enterForm-status">
                   <n-radio-button value="0">
                     不论何时
@@ -520,7 +520,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="类型" path="type">
+              <n-form-item label="类型" path="type" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="enterForm.type" name="enterForm-type">
                   <n-radio-button value="0">
                     全部欢迎
@@ -533,7 +533,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="欢迎内容" path="content">
+              <n-form-item label="欢迎内容" path="content" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="enterForm.content"
                   placeholder="支持设置多条信息，每条用换行分隔。每次触发时系统会随机选取一条进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。"
@@ -589,10 +589,10 @@
               <p>名称：<b>@name@</b></p>
             </n-alert>
             <n-form
-              :model="followForm" :rules="followRules" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              ref="followFormRef" :model="followForm" :rules="followRules" label-placement="left"
+              label-width="auto" require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="状态" path="status">
+              <n-form-item label="状态" path="status" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="followForm.status" name="followForm-status">
                   <n-radio-button value="0">
                     不论何时
@@ -605,7 +605,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="类型" path="type">
+              <n-form-item label="类型" path="type" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="followForm.type" name="followForm-type">
                   <n-radio-button value="0">
                     全部感谢
@@ -618,7 +618,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="感谢内容" path="content">
+              <n-form-item label="感谢内容" path="content" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="followForm.content"
                   placeholder="支持设置多条信息，每条用换行分隔。每次触发时系统会随机选取一条进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。"
@@ -674,10 +674,10 @@
               <p>名称：<b>@name@</b></p>
             </n-alert>
             <n-form
-              :model="shareForm" :rules="shareRules" label-placement="left" label-width="auto"
+              ref="shareFormRef" :model="shareForm" :rules="shareRules" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="状态" path="status">
+              <n-form-item label="状态" path="status" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="shareForm.status" name="shareForm-status">
                   <n-radio-button value="0">
                     不论何时
@@ -690,7 +690,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="类型" path="type">
+              <n-form-item label="类型" path="type" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="shareForm.type" name="shareForm-type">
                   <n-radio-button value="0">
                     全部感谢
@@ -703,7 +703,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="感谢内容" path="content">
+              <n-form-item label="感谢内容" path="content" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="shareForm.content"
                   placeholder="支持设置多条信息，每条用换行分隔。每次触发时系统会随机选取一条进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。"
@@ -746,10 +746,10 @@
               </n-button-group>
             </template>
             <n-form
-              :model="autorespondersForm" :rules="autorespondersRules" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              ref="autorespondersFormRef" :model="autorespondersForm" :rules="autorespondersRules"
+              label-placement="left" label-width="auto" require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="状态" path="status">
+              <n-form-item label="状态" path="status" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="autorespondersForm.status" name="autorespondersForm-status">
                   <n-radio-button value="0">
                     不论何时
@@ -762,7 +762,7 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
-              <n-form-item label="类型" path="type">
+              <n-form-item label="类型" path="type" feedback-style="margin-bottom: 20px;">
                 <n-radio-group v-model:value="autorespondersForm.type" name="autorespondersForm-type">
                   <n-radio-button value="0">
                     全部回复
@@ -865,16 +865,16 @@
         <p>建议控制每条回复的长度，过长的信息可能会被系统拆分成多条发送，受弹幕频率限制可能影响最终效果和体验。</p>
       </n-alert>
       <n-form
-        :model="autorespondersForm.edit" label-placement="left" label-width="auto"
-        require-mark-placement="right-hanging" size="small"
+        ref="autorespondersFormEditRef" :model="autorespondersForm.edit" :rules="autorespondersFormEditRules"
+        label-placement="left" label-width="auto" require-mark-placement="right-hanging" size="small"
       >
-        <n-form-item label="关键词" path="keywords">
+        <n-form-item label="关键词" path="keywords" feedback-style="margin-bottom: 20px;">
           <n-input v-model:value="autorespondersForm.edit.keywords" placeholder="不可以为空" />
         </n-form-item>
-        <n-form-item label="安全词" path="safeword">
+        <n-form-item label="安全词" path="safeword" feedback-style="margin-bottom: 20px;">
           <n-input v-model:value="autorespondersForm.edit.safeword" placeholder="可以为空" />
         </n-form-item>
-        <n-form-item label="是否禁言" path="silent">
+        <n-form-item label="是否禁言" path="silent" feedback-style="margin-bottom: 20px;">
           <n-radio-group v-model:value="autorespondersForm.edit.silent" name="autorespondersForm-edit-silent">
             <n-radio-button value="0">
               否
@@ -884,19 +884,19 @@
             </n-radio-button>
           </n-radio-group>
         </n-form-item>
-        <n-form-item label="禁言时长" path="silent_minute">
+        <n-form-item v-if="autorespondersForm.edit.silent === '1'" label="禁言时长" path="silent_minute" feedback-style="margin-bottom: 20px;">
           <n-input
             v-model:value="autorespondersForm.edit.silent_minute" type="text" :allow-input="onlyAllowNumber"
-            placeholder="分钟,最低为1分钟"
+            placeholder="分钟,最低为 1 分钟"
           />
         </n-form-item>
-        <n-form-item label="赎回金额" path="ransom_amount">
+        <n-form-item v-if="autorespondersForm.edit.silent === '1'" label="赎回金额" path="ransom_amount" feedback-style="margin-bottom: 20px;">
           <n-input
             v-model:value="autorespondersForm.edit.ransom_amount" type="text" :allow-input="onlyAllowNumber"
-            placeholder="电池,最低为1电池"
+            placeholder="电池,最低为 1 电池,若设置 0 则代表不允许通过赠送礼物解除禁言"
           />
         </n-form-item>
-        <n-form-item label="回复内容" path="text">
+        <n-form-item label="回复内容" path="text" feedback-style="margin-bottom: 20px;">
           <n-input
             v-model:value="autorespondersForm.edit.text"
             placeholder="支持设置多条信息，每条用换行分隔。每次触发时系统会随机选取一条进行发送。建议控制每条信息的长度，内容过长将被拆分为多条发送，可能因频率限制影响显示效果。" type="textarea"
@@ -947,7 +947,7 @@
         <p>建议控制每条回复的长度，过长的信息可能会被系统拆分成多条发送，受弹幕频率限制可能影响最终效果和体验。</p>
       </n-alert>
       <n-form label-placement="left" label-width="auto" require-mark-placement="right-hanging" size="small">
-        <n-form-item label="房间ID">
+        <n-form-item label="房间ID" feedback-style="margin-bottom: 20px;">
           <n-input v-model:value="room.room_id" type="text" :allow-input="onlyAllowNumber" placeholder="直播间房间ID" />
         </n-form-item>
       </n-form>
@@ -1002,6 +1002,7 @@ const room = ref({
 })
 
 const checkInRef = ref()
+const checkInFormRef = ref(null)
 const checkInForm = ref({
   opens: false, // 是否开启
   status: '0', // 状态
@@ -1012,25 +1013,133 @@ const checkInForm = ref({
   success: '', // 成功回复
   reply: '', // 查询回复
 })
-const checkInRules = ref()
+const checkInRules = ref({
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[签到]请选择状态')
+      }
+      return true
+    },
+  },
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[签到]请选择类型')
+      }
+      return true
+    },
+  },
+  keywords: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[签到]签到词不允许为空')
+      }
+      return true
+    },
+  },
+  points: {
+    required: true,
+    validator(rule, value) {
+      if (!String(value).length) {
+        return new Error('[签到]请填写赠送积分')
+      }
+      return true
+    },
+  },
+  select: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[签到]查询词不允许为空')
+      }
+      return true
+    },
+  },
+  success: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[签到]成功回复不允许为空')
+      }
+      return true
+    },
+  },
+  reply: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[签到]查询回复不允许为空')
+      }
+      return true
+    },
+  },
+})
 
 const pkRef = ref()
+const pkFormRef = ref(null)
 const pkForm = ref({
   opens: false, // 是否开启
   content: '', // 内容
 })
-const pkRules = ref()
+const pkRules = ref({
+  content: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[PK播报]播报内容不允许为空')
+      }
+      return true
+    },
+  },
+})
 
 const timingRef = ref()
+const timingFormRef = ref(null)
 const timingForm = ref({
   opens: false, // 是否开启
   intervals: 5, // 间隔时间
   status: '0', // 状态
   content: '', // 内容
 })
-const timingRules = ref()
+const timingRules = ref({
+  intervals: {
+    required: true,
+    validator(rule, value) {
+      if (!String(value).length) {
+        return new Error('[定时广告]间隔时间不允许为空')
+      }
+      if (Number(value) < 10) {
+        return new Error('[定时广告]为保障直播间环境，请勿设置过低的间隔时间')
+      }
+      return true
+    },
+  },
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[定时广告]请选择状态')
+      }
+      return true
+    },
+  },
+  content: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[定时广告]发送内容不允许为空')
+      }
+      return true
+    },
+  },
+})
 
 const presentRef = ref()
+const presentFormRef = ref(null)
 const presentForm = ref({
   opens: false,
   number: '0', // 数量：0-不展示，1-展示
@@ -1040,36 +1149,180 @@ const presentForm = ref({
   type: '0', // 类型：0=全部答谢，1=仅答谢牌子，2=仅答谢航海
   content: '', // 内容
 })
-const presentRules = ref()
+const presentRules = ref({
+  number: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[礼物答谢]请选择展是否展示数量')
+      }
+      return true
+    },
+  },
+  merge: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[礼物答谢]请选择礼物是否合并')
+      }
+      return true
+    },
+  },
+  price: {
+    required: true,
+    validator(rule, value) {
+      if (!String(value).length) {
+        return new Error('[礼物答谢]起始感谢电池不允许为空')
+      }
+      return true
+    },
+  },
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[礼物答谢]请选择状态')
+      }
+      return true
+    },
+  },
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[礼物答谢]请选择类型')
+      }
+      return true
+    },
+  },
+  content: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[礼物答谢]发送内容不允许为空')
+      }
+      return true
+    },
+  },
+})
 
 const enterRef = ref()
+const enterFormRef = ref(null)
 const enterForm = ref({
   opens: false,
   status: '0', // 状态
   type: '0', // 类型：0=全部欢迎，1=仅欢迎牌子，2=仅欢迎航海
   content: null, // 内容
 })
-const enterRules = ref()
+const enterRules = ref({
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[进房欢迎]请选择状态')
+      }
+      return true
+    },
+  },
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[进房欢迎]请选择类型')
+      }
+      return true
+    },
+  },
+  content: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[进房欢迎]发送内容不允许为空')
+      }
+      return true
+    },
+  },
+})
 
 const followRef = ref()
+const followFormRef = ref(null)
 const followForm = ref({
   opens: false,
   status: '0', // 状态
   type: '0', // 类型：0=全部感谢，1=仅感谢牌子，2=仅感谢航海
   content: null, // 内容
 })
-const followRules = ref()
+const followRules = ref({
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[感谢关注]请选择状态')
+      }
+      return true
+    },
+  },
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[感谢关注]请选择类型')
+      }
+      return true
+    },
+  },
+  content: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[感谢关注]发送内容不允许为空')
+      }
+      return true
+    },
+  },
+})
 
 const shareRef = ref()
+const shareFormRef = ref(null)
 const shareForm = ref({
   opens: false,
   status: '0', // 状态
   type: '0', // 类型：0=全部感谢，1=仅感谢牌子，2=仅感谢航海
   content: null, // 内容
 })
-const shareRules = ref()
+const shareRules = ref({
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[感谢分享]请选择状态')
+      }
+      return true
+    },
+  },
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[感谢分享]请选择类型')
+      }
+      return true
+    },
+  },
+  content: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[感谢分享]发送内容不允许为空')
+      }
+      return true
+    },
+  },
+})
 
 const autorespondersRef = ref()
+const autorespondersFormRef = ref(null)
+const autorespondersFormEditRef = ref(null)
 const autorespondersForm = ref({
   edit: {
     index: 0, // 索引
@@ -1077,15 +1330,85 @@ const autorespondersForm = ref({
     safeword: '', // 屏蔽字
     text: '', // 内容
     silent: '0', // 是否开启禁言
-    silent_minute: 1, // 禁言时长(分钟)
-    ransom_amount: 1, // 赎回金额(电池)
+    silent_minute: '1', // 禁言时长(分钟)
+    ransom_amount: '1', // 赎回金额(电池)
   },
   opens: false,
   status: '0', // 状态
   type: '0', // 类型：0=全部响应，1=仅响应牌子，2=仅响应航海
   content: [], // 内容
 })
-const autorespondersRules = ref()
+const autorespondersRules = ref({
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[自动回复]请选择状态')
+      }
+      return true
+    },
+  },
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[自动回复]请选择类型')
+      }
+      return true
+    },
+  },
+})
+const autorespondersFormEditRules = ref({
+  keywords: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[自动回复]关键词不能为空')
+      }
+      return true
+    },
+  },
+  text: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[自动回复]回复内容不能为空')
+      }
+      return true
+    },
+  },
+  silent: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[自动回复]请选择是否开启禁言')
+      }
+      return true
+    },
+  },
+  silent_minute: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[自动回复]禁言时长不能为空')
+      }
+      if (Number(value) < 1) {
+        return new Error('[自动回复]禁言时长最低不能低于 1 分钟')
+      }
+      return true
+    },
+  },
+  ransom_amount: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[自动回复]赎回金额不能为空')
+      }
+      return true
+    },
+  },
+
+})
 const autorespondersColumns = ref([
   { title: '关键词', key: 'keywords' },
   {
@@ -1233,8 +1556,8 @@ function openAutoResponderModal(index = 0) {
     safeword: '', // 屏蔽字
     text: '', // 内容
     silent: '0', // 是否开启禁言
-    silent_minute: 0, // 禁言时长(分钟)
-    ransom_amount: 0, // 赎回金额(电池)
+    silent_minute: '1', // 禁言时长(分钟)
+    ransom_amount: '1', // 赎回金额(电池)
   }
   if (index - 1 >= 0) {
     autorespondersForm.value.edit = {
@@ -1243,8 +1566,8 @@ function openAutoResponderModal(index = 0) {
       safeword: autorespondersForm.value.content?.[index - 1]?.safeword ?? '', // 屏蔽字
       text: autorespondersForm.value.content?.[index - 1]?.text ?? '', // 内容
       silent: autorespondersForm.value.content?.[index - 1]?.silent ?? false, // 是否开启禁言
-      silent_minute: autorespondersForm.value.content?.[index - 1]?.silent_minute ?? 0, // 禁言时长(分钟)
-      ransom_amount: autorespondersForm.value.content?.[index - 1]?.ransom_amount ?? 0, // 赎回金额(电池)
+      silent_minute: autorespondersForm.value.content?.[index - 1]?.silent_minute ?? '1', // 禁言时长(分钟)
+      ransom_amount: autorespondersForm.value.content?.[index - 1]?.ransom_amount ?? '1', // 赎回金额(电池)
     }
   }
   autorespondersShowModal.value = true
@@ -1256,7 +1579,17 @@ function deleteAutoResponder(index) {
 }
 
 // 存储自动回复编辑信息
-function saveAutoResponder() {
+async function saveAutoResponder() {
+  await autorespondersFormEditRef.value?.validate((errors) => {
+    if (errors) {
+      errors.forEach((_errors) => {
+        _errors.forEach((item) => {
+          $message.error(item.message)
+        })
+      })
+      return false
+    }
+  })
   if (autorespondersForm.value.edit.index - 1 >= 0) {
     autorespondersForm.value.content[autorespondersForm.value.edit.index - 1] = {
       keywords: autorespondersForm.value.edit.keywords,
@@ -1264,8 +1597,8 @@ function saveAutoResponder() {
       text: autorespondersForm.value.edit.text,
       enable: true,
       silent: autorespondersForm.value.edit.silent,
-      silent_minute: autorespondersForm.value.edit.silent_minute,
-      ransom_amount: autorespondersForm.value.edit.ransom_amount,
+      silent_minute: String(autorespondersForm.value.edit.silent_minute),
+      ransom_amount: String(autorespondersForm.value.edit.ransom_amount),
     }
   }
   else {
@@ -1275,8 +1608,8 @@ function saveAutoResponder() {
       text: autorespondersForm.value.edit.text,
       enable: true,
       silent: autorespondersForm.value.edit.silent,
-      silent_minute: autorespondersForm.value.edit.silent_minute,
-      ransom_amount: autorespondersForm.value.edit.ransom_amount,
+      silent_minute: String(autorespondersForm.value.edit.silent_minute),
+      ransom_amount: String(autorespondersForm.value.edit.ransom_amount),
     })
   }
   autorespondersShowModal.value = false
@@ -1428,9 +1761,114 @@ async function getConfig() {
 // 调用API存储配置信息
 const setConfigLoading = ref(false)
 async function setConfig() {
+  if (checkInForm.value.opens) {
+    await checkInFormRef.value?.validate((errors) => {
+      if (errors) {
+        errors.forEach((_errors) => {
+          _errors.forEach((item) => {
+            $message.error(item.message)
+          })
+        })
+        return false
+      }
+    })
+  }
+  if (pkForm.value.opens) {
+    await pkFormRef.value?.validate((errors) => {
+      if (errors) {
+        errors.forEach((_errors) => {
+          _errors.forEach((item) => {
+            $message.error(item.message)
+          })
+        })
+        return false
+      }
+    })
+  }
+  if (timingForm.value.opens) {
+    await timingFormRef.value?.validate((errors) => {
+      if (errors) {
+        errors.forEach((_errors) => {
+          _errors.forEach((item) => {
+            $message.error(item.message)
+          })
+        })
+        return false
+      }
+    })
+  }
+  if (presentForm.value.opens) {
+    await presentFormRef.value?.validate((errors) => {
+      if (errors) {
+        errors.forEach((_errors) => {
+          _errors.forEach((item) => {
+            $message.error(item.message)
+          })
+        })
+        return false
+      }
+    })
+  }
+  if (enterForm.value.opens) {
+    await enterFormRef.value?.validate((errors) => {
+      if (errors) {
+        errors.forEach((_errors) => {
+          _errors.forEach((item) => {
+            $message.error(item.message)
+          })
+        })
+        return false
+      }
+    })
+  }
+  if (followForm.value.opens) {
+    await followFormRef.value?.validate((errors) => {
+      if (errors) {
+        errors.forEach((_errors) => {
+          _errors.forEach((item) => {
+            $message.error(item.message)
+          })
+        })
+        return false
+      }
+    })
+  }
+  if (shareForm.value.opens) {
+    await shareFormRef.value?.validate((errors) => {
+      if (errors) {
+        errors.forEach((_errors) => {
+          _errors.forEach((item) => {
+            $message.error(item.message)
+          })
+        })
+        return false
+      }
+    })
+  }
+  if (autorespondersForm.value.opens) {
+    await autorespondersFormRef.value?.validate((errors) => {
+      if (errors) {
+        errors.forEach((_errors) => {
+          _errors.forEach((item) => {
+            $message.error(item.message)
+          })
+        })
+        return false
+      }
+    })
+  }
   setConfigLoading.value = true
   try {
-    await api.setConfig(timingForm.value, presentForm.value, enterForm.value, pkForm.value, followForm.value, shareForm.value, autorespondersForm.value, checkInForm.value)
+    await api.setConfig(
+      timingForm.value,
+      presentForm.value,
+      enterForm.value,
+      pkForm.value,
+      followForm.value,
+      shareForm.value,
+      autorespondersForm.value,
+      checkInForm.value,
+    )
     $message.success('保存成功')
   }
   catch (err) {
