@@ -587,6 +587,14 @@
         <n-form-item label="名次">
           <n-input v-model:value="rankingsEdit.position" type="text" :allow-input="onlyAllowNumber" placeholder="名次" />
         </n-form-item>
+        <n-form-item label="内容">
+          <n-input
+            v-model:value="rankingsEdit.content" placeholder="满足名次后展示给用户的内容" type="textarea" :autosize="{
+              minRows: 5,
+              maxRows: 5,
+            }"
+          />
+        </n-form-item>
       </n-form>
       <template #footer>
         <div class="w-100% flex">
@@ -741,8 +749,9 @@ const tributeGiftOrderSuccessfulRankingslistColumns = ref([
 ])
 
 const rankingsEdit = ref({
+  index: 0,
   comparison: '0',
-  position: 0,
+  position: '0',
   content: '',
 })
 
@@ -805,6 +814,7 @@ function openRankingsListModal(index = 0) {
       position: configForm.value.tribute_gift_order_successful_rankingslist?.[index - 1]?.position ?? '0',
       content: configForm.value.tribute_gift_order_successful_rankingslist?.[index - 1]?.content ?? '',
     }
+    rankingsEdit.value.comparison = String(rankingsEdit.value.comparison)
   }
   rankingsListModal.value = true
 }
@@ -818,14 +828,14 @@ function deleteRankingsList(index) {
 function saveRankingsList() {
   if (rankingsEdit.value.index - 1 >= 0) {
     configForm.value.tribute_gift_order_successful_rankingslist[rankingsEdit.value.index - 1] = {
-      comparison: rankingsEdit.value.comparison,
+      comparison: String(rankingsEdit.value.comparison),
       position: rankingsEdit.value.position,
       content: rankingsEdit.value.content,
     }
   }
   else {
     configForm.value.tribute_gift_order_successful_rankingslist.push({
-      comparison: rankingsEdit.value.comparison,
+      comparison: String(rankingsEdit.value.comparison),
       position: rankingsEdit.value.position,
       content: rankingsEdit.value.content,
 
