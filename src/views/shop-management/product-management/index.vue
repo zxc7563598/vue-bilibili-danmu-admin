@@ -25,21 +25,37 @@
     <MeModal ref="$modalRef">
       <n-card :bordered="false" size="small">
         <n-form
-          :model="editItems" :rules="editItemsRules" label-placement="left" label-width="auto"
+          ref="editItemsRef" :model="editItems" :rules="editItemsRules" label-placement="left" label-width="auto"
           require-mark-placement="right-hanging" size="small"
         >
           <n-form-item label="商品名称" path="name">
             <n-input v-model:value="editItems.name" placeholder="商品的名称" />
+            <template #feedback>
+              <p>用于展示的商品名称，不宜过长</p>
+            </template>
           </n-form-item>
-          <n-form-item label="商品价格" path="amount">
+          <n-form-item label="商品价格" path="amount" class="mt-20">
             <n-input v-model:value="editItems.amount" type="text" :allow-input="onlyAllowNumber" placeholder="积分" />
+            <template #feedback>
+              <p>用户兑换此商品需要消耗的积分</p>
+            </template>
           </n-form-item>
-          <n-form-item label="购买说明" path="tips">
+          <n-form-item label="购买说明" path="tips" class="mt-20">
             <n-input v-model:value="editItems.tips" placeholder="展示在商品详情页，一句话就行，为空则不展示" />
+            <template #feedback>
+              <p>在商品详情页「商品封面图」下方进行展示</p>
+              <p class="mt-5">
+                若无内容，则不进行任何展示
+              </p>
+            </template>
           </n-form-item>
-          <n-form-item label="商品封面图" path="cover_image">
+          <n-form-item label="商品封面图" path="cover_image" class="mt-20">
             <n-upload directory-dnd :show-file-list="false" @before-upload="coverUploadHandler">
-              <NImage width="50%" :src="editItems.cover_image.url" :preview-disabled="true" />
+              <NImage
+                v-if="editItems.cover_image.url" width="50%" :src="editItems.cover_image.url"
+                :preview-disabled="true"
+              />
+              <n-empty v-else description="点击上传图片" />
             </n-upload>
             <template #feedback>
               <p>点击图片可进行上传。建议与其他商品封面图比例一致</p>
@@ -287,7 +303,108 @@ const tableColumns = [
 ]
 
 // 编辑信息
-const editItemsRules = ref({})
+const editItemsRef = ref(null)
+const editItemsRules = ref({
+  name: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('商品名称不能为空')
+      }
+      return true
+    },
+  },
+  amount: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('商品金额不能为空')
+      }
+      return true
+    },
+  },
+  cover_image: {
+    required: true,
+    validator(rule, value) {
+      if (!value.path) {
+        return new Error('请上传封面图')
+      }
+      return true
+    },
+  },
+  carousel_images: {
+    required: true,
+    validator(rule, value) {
+      if (!value || !value.length) {
+        return new Error('至少上传一张商品展示图')
+      }
+      return true
+    },
+  },
+  details_images: {
+    required: true,
+    validator(rule, value) {
+      if (!value || !value.length) {
+        return new Error('至少上传一张商品详情图')
+      }
+      return true
+    },
+  },
+  service_description_images: {
+    required: true,
+    validator(rule, value) {
+      if (!value || !value.length) {
+        return new Error('至少上传一张服务说明图')
+      }
+      return true
+    },
+  },
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请选择商品状态')
+      }
+      return true
+    },
+  },
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请选择商品类型')
+      }
+      return true
+    },
+  },
+  sort: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请填写商品排序')
+      }
+      return true
+    },
+  },
+  sale_num: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请填写销售数量')
+      }
+      return true
+    },
+  },
+  sale_increase: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请填写每次销售递增')
+      }
+      return true
+    },
+  },
+})
 const editItems = ref({
   goods_id: 0, // 商品ID
   name: '', // 商品名称
@@ -557,6 +674,20 @@ function checkGoods(item = {}) {
         $message.error('您没有权限变更商品')
         return false
       }
+      await editItemsRef.value?.validate((errors) => {
+        if (errors) {
+          errors.forEach((_errors) => {
+            _errors.forEach((item) => {
+              $message.error(item.message)
+            })
+          })
+          return false
+        }
+      })
+      if (editItems.value.subs.length <= 0) {
+        $message.error('商品至少需要 1 个规格')
+        return false
+      }
       await setDataDetails()
       $table.value.handleSearch()
     },
@@ -577,13 +708,16 @@ function handleAdd() {
     carousel_images: [], // 商品展示图（多个）
     details_images: [], // 详情图（多个）
     service_description_images: [], // 服务说明图（多个）
-    status: 1, // 状态
-    type: 0, // 商品类型
-    sort: 0, // 排序，从小到大
-    sale_num: 0, // 销售数量
-    sale_increase: 1, // 每次销售递增
+    status: '1', // 状态
+    type: '0', // 商品类型
+    sort: '0', // 排序，从小到大
+    sale_num: '0', // 销售数量
+    sale_increase: '1', // 每次销售递增
     subs: [], // 商品规格
   }
+  carouselImagesFiles.value = []
+  detailsImagesFiles.value = []
+  serviceDescriptionImagesFiles.value = []
   $modalRef.value?.open({
     showCancel: true,
     title: '添加商品',
@@ -594,6 +728,16 @@ function handleAdd() {
         $message.error('您没有权限变更商品')
         return false
       }
+      await editItemsRef.value?.validate((errors) => {
+        if (errors) {
+          errors.forEach((_errors) => {
+            _errors.forEach((item) => {
+              $message.error(item.message)
+            })
+          })
+          return false
+        }
+      })
       await setDataDetails()
       $table.value.handleSearch()
     },
