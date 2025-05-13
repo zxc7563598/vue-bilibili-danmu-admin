@@ -2,8 +2,8 @@
   <CommonPage>
     <template #action>
       <NButton
-        v-permission="'ShopManagementUserManagementReset'" class="ml-auto" type="warning" :loading="resetPasswordLoading"
-        @click="resetPassword"
+        v-permission="'ShopManagementUserManagementReset'" class="ml-auto" type="warning"
+        :loading="resetPasswordLoading" @click="resetPassword"
       >
         <i class="i-material-symbols:add mr-4 text-18" />
         重置全部用户密码
@@ -26,7 +26,7 @@
     <MeModal ref="$checkUser">
       <n-card :bordered="false" size="small">
         <n-form
-          :model="editItems" :rules="editItemsRules" label-placement="left" label-width="auto"
+          ref="editItemsRef" :model="editItems" :rules="editItemsRules" label-placement="left" label-width="auto"
           require-mark-placement="right-hanging" size="small"
         >
           <n-form-item label="用户UID" path="uid">
@@ -36,14 +36,29 @@
                 搜索用户
               </NButton>
             </n-input-group>
+            <template #feedback>
+              <p>可在用户个人主页右侧的个人资料中查看</p>
+            </template>
           </n-form-item>
-          <n-form-item label="用户名称" path="name">
-            <n-input v-model:value="editItems.name" type="text" placeholder="可通过UID自动查询" />
+          <n-form-item label="用户名称" path="name" class="mt-20">
+            <n-input v-model:value="editItems.name" type="text" placeholder="UID 搜索后将自动填充信息，亦可手动修改" />
+            <template #feedback>
+              <p>UID 搜索后将自动填充信息，亦可手动修改</p>
+            </template>
           </n-form-item>
-          <n-form-item label="登录密码" path="password">
+          <n-form-item label="登录密码" path="password" class="mt-20">
             <n-input v-model:value="editItems.password" type="text" placeholder="不输入则不会变更" />
+            <template #feedback>
+              <p>填写后将覆盖当前密码</p>
+              <p class="mt-5">
+                若用户已有密码且留空，则不做更改
+              </p>
+              <p class="mt-5">
+                若用户未设置密码且留空，登录时将引导设置
+              </p>
+            </template>
           </n-form-item>
-          <n-form-item label="航海类型" path="vip_type">
+          <n-form-item label="航海类型" path="vip_type" class="mt-20">
             <n-radio-group v-model:value="editItems.vip_type" name="editItems-vip_type">
               <n-radio-button value="0">
                 潜在老头
@@ -58,6 +73,9 @@
                 总督
               </n-radio-button>
             </n-radio-group>
+            <template #feedback>
+              <p>默认使用最近一次身份信息，可手动修改</p>
+            </template>
           </n-form-item>
         </n-form>
       </n-card>
@@ -66,8 +84,8 @@
     <MeModal ref="$checkUserPoint">
       <n-card :bordered="false" size="small">
         <NButton
-          v-permission="'ShopManagementUserManagementEditPoint'" strong secondary type="primary" class="mb-12 w-100%"
-          @click="openSetPointModal"
+          v-permission="'ShopManagementUserManagementEditPoint'" strong secondary type="primary"
+          class="mb-12 w-100%" @click="openSetPointModal"
         >
           点击添加变更记录
         </NButton>
@@ -78,8 +96,8 @@
     <MeModal ref="$setUserPoint">
       <n-card :bordered="false" size="small">
         <n-form
-          :model="editUserPoint" :rules="editUserPointRules" label-placement="left" label-width="auto"
-          require-mark-placement="right-hanging" size="small"
+          ref="editUserPointRef" :model="editUserPoint" :rules="editUserPointRules" label-placement="left"
+          label-width="auto" require-mark-placement="right-hanging" size="small"
         >
           <n-form-item label="变更类型" path="type">
             <n-radio-group v-model:value="editUserPoint.type" name="editUserPoint-type">
@@ -90,9 +108,15 @@
                 减少
               </n-radio-button>
             </n-radio-group>
+            <template #feedback>
+              <p>用于增加或扣减用户积分</p>
+            </template>
           </n-form-item>
-          <n-form-item label="变更积分" path="point">
-            <n-input v-model:value="editUserPoint.point" :allow-input="onlyAllowNumber" placeholder="变更数量，增加或减少多少" />
+          <n-form-item label="变更积分" path="point" class="mt-20">
+            <n-input v-model:value="editUserPoint.point" :allow-input="onlyAllowNumber" placeholder="输入增加或扣减用户积分" />
+            <template #feedback>
+              <p>输入增加或扣减用户积分</p>
+            </template>
           </n-form-item>
         </n-form>
       </n-card>
@@ -203,7 +227,36 @@ const pointTableColumns = ref([
 ])
 
 // 编辑信息
-const editItemsRules = ref({})
+const editItemsRef = ref(null)
+const editItemsRules = ref({
+  uid: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请填写用户UID')
+      }
+      return true
+    },
+  },
+  name: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('获取用户名称失败，请填写用户名称')
+      }
+      return true
+    },
+  },
+  vip_type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请选择一个航海类型')
+      }
+      return true
+    },
+  },
+})
 const editItems = ref({
   user_id: 0, // 用户ID
   uid: '', // 用户UID
@@ -261,6 +314,16 @@ function handleAdd() {
         $message.error('您没有权限添加用户')
         return false
       }
+      await editItemsRef.value?.validate((errors) => {
+        if (errors) {
+          errors.forEach((_errors) => {
+            _errors.forEach((item) => {
+              $message.error(item.message)
+            })
+          })
+          return false
+        }
+      })
       await setData()
       $table.value.handleSearch()
     },
@@ -271,13 +334,13 @@ function handleAdd() {
 async function setData() {
   $checkUser.value.okLoading = true
   try {
-    await api.setData(
-      editItems.value.user_id,
-      editItems.value.uid,
-      editItems.value.name,
-      editItems.value.password,
-      editItems.value.vip_type,
-    )
+    // await api.setData(
+    //   editItems.value.user_id,
+    //   editItems.value.uid,
+    //   editItems.value.name,
+    //   editItems.value.password,
+    //   editItems.value.vip_type,
+    // )
     $message.success('保存成功')
   }
   catch (err) {
@@ -349,7 +412,30 @@ function checkUserPoint(item = {}) {
 
 // 点击添加变更记录弹窗
 const [$setUserPoint] = useModal()
-const editUserPointRules = ref({})
+const editUserPointRef = ref(null)
+const editUserPointRules = ref({
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请选择变更类型')
+      }
+      return true
+    },
+  },
+  point: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请输入积分')
+      }
+      else if (Number(value) <= 0) {
+        return new Error('积分变更不允许为 0')
+      }
+      return true
+    },
+  },
+})
 const editUserPoint = ref({
   user_id: '', // 用户id
   type: '0', // 类型
@@ -371,6 +457,17 @@ function openSetPointModal() {
         $message.error('您没有权限变更用户积分')
         return false
       }
+      await editUserPointRef.value?.validate((errors) => {
+        if (errors) {
+          errors.forEach((_errors) => {
+            _errors.forEach((item) => {
+              $message.error(item.message)
+            })
+          })
+          $setUserPoint.value.okLoading = false
+          return false
+        }
+      })
       await setUserPoint()
       await api.getUserRecords(editUserPointUserId.value).then(({ data = [] }) => {
         pointTableData.value = data.records
