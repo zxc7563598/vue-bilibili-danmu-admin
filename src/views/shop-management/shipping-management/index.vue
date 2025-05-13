@@ -87,13 +87,16 @@
           </n-card>
         </div>
         <n-form
-          :model="editItems" :rules="editItemsRules" label-placement="left" label-width="auto"
+          ref="editItemsRef" :model="editItems" :rules="editItemsRules" label-placement="left" label-width="auto"
           require-mark-placement="right-hanging" size="small"
         >
           <n-form-item label="快递单号" path="tracking_number">
             <n-input v-model:value="editItems.tracking_number" type="text" placeholder="如果不存在可不进行输入" />
+            <template #feedback>
+              <p>如有快递单号，建议填写，便于后续核对</p>
+            </template>
           </n-form-item>
-          <n-form-item label="发货状态" path="status">
+          <n-form-item label="发货状态" path="status" class="mt-20">
             <n-radio-group v-model:value="editItems.status" name="editItems-status">
               <n-radio-button value="0">
                 未发货
@@ -102,6 +105,9 @@
                 已发货
               </n-radio-button>
             </n-radio-group>
+            <template #feedback>
+              <p>建议如实填写，避免漏发或重复发货</p>
+            </template>
           </n-form-item>
         </n-form>
       </n-card>
@@ -187,7 +193,18 @@ const tableColumns = ref([
 ])
 
 // 编辑信息
-const editItemsRules = ref({})
+const editItemsRef = ref(null)
+const editItemsRules = ref({
+  status: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请选择发货状态')
+      }
+      return true
+    },
+  },
+})
 const editItems = ref({
   records_id: '',
   goods: {
@@ -244,6 +261,16 @@ function checkDetails(item = {}) {
         $message.error('您没有权限变更发货信息')
         return false
       }
+      await editItemsRef.value?.validate((errors) => {
+        if (errors) {
+          errors.forEach((_errors) => {
+            _errors.forEach((item) => {
+              $message.error(item.message)
+            })
+          })
+          return false
+        }
+      })
       await setData()
       $table.value.handleSearch()
     },
