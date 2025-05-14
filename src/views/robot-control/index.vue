@@ -3,7 +3,7 @@
     <div class="flex">
       <n-card v-if="!robot.loading" class="min-w-300 w-30%" title="机器人信息">
         <template #header-extra>
-          <NButton round strong secondary type="primary" :loading="handleAuthActionLoading" @click="handleAuthAction">
+          <NButton strong secondary round type="primary" :loading="handleAuthActionLoading" @click="handleAuthAction">
             {{ robot.is_login ? '退出登录' : '立即登录' }}
           </NButton>
         </template>
@@ -86,7 +86,7 @@
 
     <div v-if="!configLoading" class="mt-12 flex">
       <!-- 功能模块 -->
-      <div class="min-w-400">
+      <div class="min-w-400 flex-1">
         <!-- 功能模块：签到 -->
         <div ref="checkInRef">
           <n-card id="checkIn" title="签到">
@@ -1008,7 +1008,7 @@ const checkInForm = ref({
   status: '0', // 状态
   type: '0', // 类型：0=全部感谢，1=仅感谢牌子，2=仅感谢航海
   keywords: '', // 签到词
-  points: 0, // 签到赠送积分
+  points: '0', // 签到赠送积分
   select: '', // 查询词
   success: '', // 成功回复
   reply: '', // 查询回复
@@ -1101,7 +1101,7 @@ const timingRef = ref()
 const timingFormRef = ref(null)
 const timingForm = ref({
   opens: false, // 是否开启
-  intervals: 5, // 间隔时间
+  intervals: '5', // 间隔时间
   status: '0', // 状态
   content: '', // 内容
 })
@@ -1144,7 +1144,7 @@ const presentForm = ref({
   opens: false,
   number: '0', // 数量：0-不展示，1-展示
   merge: '0', // 礼物合并：0-不合并，1-合并
-  price: 0, // 起始感谢电池数
+  price: '0', // 起始感谢电池数
   status: '0', // 状态：0=不论何时，1-仅在直播时，2-仅在非直播时
   type: '0', // 类型：0=全部答谢，1=仅答谢牌子，2=仅答谢航海
   content: '', // 内容
@@ -1706,14 +1706,14 @@ async function getConfig() {
     const { data = [] } = await api.getConfig()
     // 定时广告
     timingForm.value.opens = data.timing.opens
-    timingForm.value.intervals = data.timing.intervals
+    timingForm.value.intervals = String(data.timing.intervals)
     timingForm.value.status = String(data.timing.status)
     timingForm.value.content = data.timing.content
     // 礼物答谢
     presentForm.value.opens = data.present.opens
     presentForm.value.number = String(data.present.number)
     presentForm.value.merge = String(data.present.merge)
-    presentForm.value.price = data.present.price
+    presentForm.value.price = String(data.present.price)
     presentForm.value.status = String(data.present.status)
     presentForm.value.type = String(data.present.type)
     presentForm.value.content = data.present.content

@@ -7,7 +7,7 @@
         <div ref="storeSettingsRef">
           <n-card title="商城设置">
             <n-form
-              :model="configForm" :rules="configRules" label-placement="left" label-width="auto"
+              :model="configForm" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
               <n-form-item label="登录页面背景图" path="login_background_image">
@@ -117,7 +117,7 @@
         <div ref="emailNotificationsRef" class="mt-12">
           <n-card title="邮件通知">
             <n-form
-              :model="configForm" :rules="configRules" label-placement="left" label-width="auto"
+              :model="configForm" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
               <n-form-item label="是否开启下播邮件" path="enable_aggregate_mail">
@@ -180,7 +180,7 @@
         <div ref="pointsSettingsRef" class="mt-12">
           <n-card title="积分相关">
             <n-form
-              :model="configForm" :rules="configRules" label-placement="left" label-width="auto"
+              :model="configForm" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
               <n-form-item label="是否开启礼物记录" path="gift_records">
@@ -262,7 +262,7 @@
         <div ref="storePolicyRef" class="mt-12">
           <n-card title="商城协议">
             <n-form
-              :model="configForm" :rules="configRules" label-placement="left" label-width="auto"
+              :model="configForm" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
               <n-form-item label="协议人名称" path="protocols_surname">
@@ -344,7 +344,7 @@
               <p>四部分可以自由设置</p>
             </n-alert>
             <n-form
-              :model="configForm" :rules="configRules" label-placement="left" label-width="auto"
+              :model="configForm" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
               <n-form-item label="下单成功图标" path="virtual_gift_order_successful_icon" class="mt-20">
@@ -405,7 +405,7 @@
               <p>四部分可以自由设置</p>
             </n-alert>
             <n-form
-              :model="configForm" :rules="configRules" label-placement="left" label-width="auto"
+              :model="configForm" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
               <n-form-item label="下单成功图标" path="realism_gift_order_successful_icon" class="mt-20">
@@ -466,7 +466,7 @@
               <p>四部分可以自由设置</p>
             </n-alert>
             <n-form
-              :model="configForm" :rules="configRules" label-placement="left" label-width="auto"
+              :model="configForm" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
               <n-form-item label="下单成功图标" path="tribute_gift_order_successful_icon" class="mt-20">
