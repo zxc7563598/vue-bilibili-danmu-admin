@@ -65,7 +65,7 @@ const tableColumns = ref([
     },
   },
   { title: '弹幕信息', key: 'msg', minWidth: 120 },
-  { title: '发送时间', key: 'send_at', minWidth: 180 },
+  { title: '发送时间', key: 'send_time', minWidth: 180 },
 ])
 
 function goToLive(room_id) {
