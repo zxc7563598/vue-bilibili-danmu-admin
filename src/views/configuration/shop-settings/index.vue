@@ -568,7 +568,7 @@
             <NButton type="primary" dashed class="mb-12 w-100%" @click="scrollToSection('tributeGiftOrderRef')">
               贡品礼物下单
             </NButton>
-            <NButton type="primary" class="mb-12 w-100%" :loading="setDataLoading" @click="setData">
+            <NButton v-permission="'ConfigurationShopSettingsEdit'" type="primary" class="mb-12 w-100%" :loading="setDataLoading" @click="setData">
               保存配置
             </NButton>
           </n-card>

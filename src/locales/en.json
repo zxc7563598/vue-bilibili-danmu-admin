@@ -139,7 +139,8 @@
       "submitWarning": "Please Enter Your Username and Password",
       "verifying": "Verifying, Please Wait...",
       "loading": "Logging In...",
-      "loginSuccess": "Logged In Successfully"
+      "loginSuccess": "Logged In Successfully",
+      "initError": "You are currently using the default password, please go to 'System Management - User Management' to change it immediately"
     },
     "403": {
       "title": "403 Forbidden",

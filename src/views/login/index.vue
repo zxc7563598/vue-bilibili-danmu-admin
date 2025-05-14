@@ -114,6 +114,9 @@ async function onLoginSuccess(data = {}) {
   $message.loading(t('page.login.loading'), { key: 'login' })
   try {
     $message.success(t('page.login.loginSuccess'), { key: 'login' })
+    if (data.init) {
+      $message.warning(t('page.login.initError'))
+    }
     if (route.query.redirect) {
       const path = route.query.redirect
       delete route.query.redirect

@@ -293,7 +293,7 @@
             <NButton type="primary" dashed class="mb-12 w-100%" @click="scrollToSection('databaseConfigRef')">
               数据库配置
             </NButton>
-            <NButton type="primary" class="mb-12 w-100%" :loading="setConfigLoading" @click="setConfig">
+            <NButton v-permission="'ConfigurationSystemSettingsEdit'" type="primary" class="mb-12 w-100%" :loading="setConfigLoading" @click="setConfig">
               保存配置
             </NButton>
           </n-card>
