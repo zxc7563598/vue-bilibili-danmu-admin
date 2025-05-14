@@ -3,7 +3,7 @@
     <div class="flex">
       <n-card v-if="!robot.loading" class="min-w-300 w-30%" title="机器人信息">
         <template #header-extra>
-          <NButton strong secondary round type="primary" :loading="handleAuthActionLoading" @click="handleAuthAction">
+          <NButton v-permission="'RobotControlUser'" strong secondary round type="primary" :loading="handleAuthActionLoading" @click="handleAuthAction">
             {{ robot.is_login ? '退出登录' : '立即登录' }}
           </NButton>
         </template>
@@ -31,8 +31,8 @@
       <n-card v-if="!room.loading" class="ml-12 min-w-300 w-70%" title="直播间信息">
         <template #header-extra>
           <NButton
-            strong secondary round type="primary" :loading="handleLiveRoomActionLoading"
-            @click="handleLiveRoomAction"
+            v-permission="'RobotControlRoom'" strong secondary round type="primary"
+            :loading="handleLiveRoomActionLoading" @click="handleLiveRoomAction"
           >
             {{ room.is_live ? '断开连接' : '连接直播间' }}
           </NButton>
@@ -810,7 +810,7 @@
             <NButton type="primary" dashed class="mb-12 w-100%" @click="scrollToSection('autorespondersRef')">
               自动回复
             </NButton>
-            <NButton type="primary" class="mb-12 w-100%" :loading="setConfigLoading" @click="setConfig">
+            <NButton v-permission="'RobotControlEdit'" type="primary" class="mb-12 w-100%" :loading="setConfigLoading" @click="setConfig">
               保存配置
             </NButton>
           </n-card>

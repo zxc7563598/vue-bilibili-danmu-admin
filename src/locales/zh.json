@@ -139,7 +139,8 @@
       "submitWarning": "请输入用户名和密码",
       "verifying": "正在验证，请稍后...",
       "loading": "登录中...",
-      "loginSuccess": "登录成功"
+      "loginSuccess": "登录成功",
+      "initError": "您当前使用的为初始密码，请立即前往「系统管理 - 用户管理」进行变更"
     },
     "403": {
       "title": "403 禁止访问",
