@@ -141,62 +141,6 @@
       "loading": "Logging In...",
       "loginSuccess": "Logged In Successfully"
     },
-    "home": {
-      "user": {
-        "greeting": "Hello, {name}",
-        "currentRole": "Current role: {role}",
-        "inspiration": "A person can almost succeed in anything he has unlimited enthusiasm for.",
-        "quoteAuthor": "Charles Schwab"
-      },
-      "welcome": {
-        "title": "✨ Welcome to Vue Naive Admin 2.0",
-        "websiteInDevelopment": "The website is under rapid development...",
-        "description": "This is a minimalist style backend management template that includes both frontend and backend solutions. The frontend uses Vite + Vue3 + Pinia + Unocss, and the backend uses Nestjs + TypeOrm + MySql. It's simple, easy to use, visually appealing, and has gone through numerous refactors and refinements, full of sincerity!!",
-        "developmentDocs": "Development Docs",
-        "codeRepository": "Code Repository"
-      },
-      "features": {
-        "title": "💯 Features",
-        "headerExtra": "👏 After dozens of refactors and detail polish",
-        "usingVue3": "Using",
-        "vue3TechStack": "Vue3",
-        "usingVite": "Mainstream tech stack: Vite + Vue3 + Pinia",
-        "usingAtomicCSS": "Using",
-        "atomicCSSFramework": "Atomic CSS",
-        "lightweightAndElegant": "Framework: Unocss, elegant, lightweight, easy to use",
-        "iconifyUnocss": "Using mainstream",
-        "customIconsSupport": "Icon scheme, supporting custom icons and dynamic rendering",
-        "usingNaiveUI": "Using Naive UI",
-        "naiveUIFeatures": "Minimalistic code style and refreshing page design",
-        "themeCustomization": "Aesthetic online, theme easily customizable",
-        "advancedFileStructure": "Advanced and easy-to-understand file structure design, with zero coupling between modules",
-        "zeroCoupling": "Zero coupling",
-        "deleteModulesNoImpact": "Deleting a single business module does not affect other modules",
-        "flatRouteDesign": "Flat route design",
-        "componentsAsPages": "Each component can be a page, solving the issue of multi-level routes with KeepAlive difficulty",
-        "dynamicPermissionRoutes": "Dynamically generate routes based on permissions",
-        "noExtraRouting": "No extra route definition needed",
-        "distinguish403And404": "403 and 404 can be distinguished",
-        "redisIntegration": "Redis integration",
-        "smoothLogin": "Seamless refresh",
-        "securityAndExperience": "User login state is controllable, security and experience are equally important",
-        "naiveUIMessage": "Naive UI encapsulation of message",
-        "globalToolMethod": "Global tool methods, supporting batch reminders and cross-page shared instances",
-        "naiveUIComponents": "Naive UI encapsulation of common business components, including",
-        "pageComponent": "Page component",
-        "crudComponent": "CRUD table component",
-        "modalComponent": "Modal component, reducing a lot of repetitive work",
-        "click": "click",
-        "moreLink": "More",
-        "viewMore": "See more useful features in continuous development..."
-      },
-      "techStack": {
-        "title": "🛠️ Tech Stack"
-      },
-      "tendencies": {
-        "title": "⚡️ tendencies"
-      }
-    },
     "403": {
       "title": "403 Forbidden",
       "tips": "Sorry, You Do Not Have Permission to Access. Please Contact the Administrator to Grant Access.",

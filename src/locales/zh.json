@@ -141,62 +141,6 @@
       "loading": "登录中...",
       "loginSuccess": "登录成功"
     },
-    "home": {
-      "user": {
-        "greeting": "你好, {name}",
-        "currentRole": "当前角色：{role}",
-        "inspiration": "一个人几乎可以在任何他怀有无限热忱的事情上成功。",
-        "quoteAuthor": "查尔斯·史考伯"
-      },
-      "welcome": {
-        "title": "✨ 欢迎使用 Vue Naive Admin 2.0",
-        "websiteInDevelopment": "官网正在火速开发中...",
-        "description": "这是一款极简风格的后台管理模板，包含前后端解决方案，前端使用 Vite + Vue3 + Pinia + Unocss，后端使用 Nestjs + TypeOrm + MySql，简单易用，赏心悦目，历经十几次重构和细节打磨，诚意满满！！",
-        "developmentDocs": "开发文档",
-        "codeRepository": "代码仓库"
-      },
-      "features": {
-        "title": "💯 特性",
-        "headerExtra": "👏 历经十几次重构和细节打磨",
-        "usingVue3": "使用",
-        "vue3TechStack": "Vue3",
-        "usingVite": "主流技术栈: Vite + Vue3 + Pinia",
-        "usingAtomicCSS": "使用",
-        "atomicCSSFramework": "原子CSS",
-        "lightweightAndElegant": "框架: Unocss，优雅、轻量、易用",
-        "iconifyUnocss": "使用主流的",
-        "customIconsSupport": "图标方案，支持自定义图标，支持动态渲染",
-        "usingNaiveUI": "使用 Naive UI",
-        "naiveUIFeatures": "极致简洁的代码风格和清爽的页面设计",
-        "themeCustomization": "审美在线，主题轻松定制",
-        "advancedFileStructure": "先进且易于理解的文件结构设计，多个模块之间",
-        "zeroCoupling": "零耦合",
-        "deleteModulesNoImpact": "单个业务模块删除不影响其他模块",
-        "flatRouteDesign": "扁平化路由设计",
-        "componentsAsPages": "每一个组件都可以是一个页面，告别多级路由 KeepAlive 难实现问题",
-        "dynamicPermissionRoutes": "基于权限动态生成路由",
-        "noExtraRouting": "无需额外定义路由",
-        "distinguish403And404": "403和404可区分",
-        "redisIntegration": "基于Redis集成",
-        "smoothLogin": "无感刷新",
-        "securityAndExperience": "用户登录态可控，安全与体验缺一不可",
-        "naiveUIMessage": "基于 Naive UI 封装",
-        "globalToolMethod": "message 全局工具方法，支持批量提醒，支持跨页面共享实例",
-        "naiveUIComponents": "基于 Naive UI 封装常用的业务组件，包含",
-        "pageComponent": "Page组件",
-        "crudComponent": "CRUD表格组件",
-        "modalComponent": "Modal组件，减少大量重复性工作",
-        "click": "点击",
-        "moreLink": "更多",
-        "viewMore": "查看更多实用功能，持续开发中..."
-      },
-      "techStack": {
-        "title": "🛠️ 技术栈"
-      },
-      "tendencies": {
-        "title": "⚡️ 趋势"
-      }
-    },
     "403": {
       "title": "403 禁止访问",
       "tips": "抱歉，您暂无权限访问，请联系管理员开通权限。",
