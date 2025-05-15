@@ -19,8 +19,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       Vue(),
       VueJsx(),
-      // 生产环境禁用 DevTools（节省构建资源）
-      mode === 'development' ? VueDevTools() : undefined,
+      VueDevTools(),
       Unocss(),
       AutoImport({
         imports: ['vue', 'vue-router'],
@@ -30,10 +29,13 @@ export default defineConfig(({ mode }) => {
         resolvers: [NaiveUiResolver()],
         dts: false,
       }),
+      // 自定义插件，用于生成页面文件的path，并添加到虚拟模块
       pluginPagePathes(),
+      // 自定义插件，用于生成自定义icon，并添加到虚拟模块
       pluginIcons(),
+      // 移除非必要的vue-router动态路由警告: No match found for location with path
       removeNoMatch(),
-    ].filter(Boolean), // 过滤 undefined 插件
+    ],
     resolve: {
       alias: {
         '@': path.resolve(process.cwd(), 'src'),
@@ -51,6 +53,7 @@ export default defineConfig(({ mode }) => {
           rewrite: path => path.replace(/^\/api/, ''),
           secure: false,
           configure: (proxy, options) => {
+            // 配置此项可在响应头中看到请求的真实地址
             proxy.on('proxyRes', (proxyRes, req) => {
               proxyRes.headers['x-real-url'] = new URL(req.url || '', options.target)?.href || ''
             })
@@ -59,27 +62,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      minify: false, // 必须关闭
-      sourcemap: false, // 必须关闭
-      cssCodeSplit: false, // 必须关闭
-      reportCompressedSize: false, // 禁用体积计算
-      chunkSizeWarningLimit: 5000, // 调高到 5MB 避免干扰
-      rollupOptions: {
-        maxParallelFileOps: 1, // 关键！单文件串行处理
-        treeshake: false, // 必须关闭
-        output: {
-        // 移除 manualChunks 和 inlineDynamicImports 的冲突配置
-        // 使用以下替代方案来减少内存压力
-          compact: true, // 压缩输出代码（不进行完整minify）
-          hoistTransitiveImports: false, // 禁止提升间接导入
-        },
-      },
-    },
-    worker: {
-      format: 'es',
-      rollupOptions: {
-        maxParallelFileOps: 1, // Worker 也限制并发
-      },
+      chunkSizeWarningLimit: 1024, // chunk 大小警告的限制（单位kb）
     },
   }
 })
