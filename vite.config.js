@@ -19,7 +19,8 @@ export default defineConfig(({ mode }) => {
     plugins: [
       Vue(),
       VueJsx(),
-      VueDevTools(),
+      // 生产环境禁用 DevTools（节省构建资源）
+      mode === 'development' ? VueDevTools() : undefined,
       Unocss(),
       AutoImport({
         imports: ['vue', 'vue-router'],
@@ -29,13 +30,10 @@ export default defineConfig(({ mode }) => {
         resolvers: [NaiveUiResolver()],
         dts: false,
       }),
-      // 自定义插件，用于生成页面文件的path，并添加到虚拟模块
       pluginPagePathes(),
-      // 自定义插件，用于生成自定义icon，并添加到虚拟模块
       pluginIcons(),
-      // 移除非必要的vue-router动态路由警告: No match found for location with path
       removeNoMatch(),
-    ],
+    ].filter(Boolean), // 过滤 undefined 插件
     resolve: {
       alias: {
         '@': path.resolve(process.cwd(), 'src'),
@@ -53,7 +51,6 @@ export default defineConfig(({ mode }) => {
           rewrite: path => path.replace(/^\/api/, ''),
           secure: false,
           configure: (proxy, options) => {
-            // 配置此项可在响应头中看到请求的真实地址
             proxy.on('proxyRes', (proxyRes, req) => {
               proxyRes.headers['x-real-url'] = new URL(req.url || '', options.target)?.href || ''
             })
@@ -62,7 +59,18 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      chunkSizeWarningLimit: 1024, // chunk 大小警告的限制（单位kb）
+      // 关闭所有高内存消耗的优化
+      minify: false, // 禁用代码压缩
+      sourcemap: false, // 禁用 sourcemap
+      cssCodeSplit: false, // 禁用 CSS 分割
+      chunkSizeWarningLimit: 2000, // 调高 chunk 警告阈值（避免干扰）
+      rollupOptions: {
+        maxParallelFileOps: 1, // 关键！限制并行文件处理
+        treeshake: false, // 禁用 Tree-shaking
+        output: {
+          manualChunks: {}, // 禁用自动拆包
+        },
+      },
     },
   }
 })
