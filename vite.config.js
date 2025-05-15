@@ -59,17 +59,26 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      // 关闭所有高内存消耗的优化
-      minify: false, // 禁用代码压缩
-      sourcemap: false, // 禁用 sourcemap
-      cssCodeSplit: false, // 禁用 CSS 分割
-      chunkSizeWarningLimit: 2000, // 调高 chunk 警告阈值（避免干扰）
+      minify: false, // 必须关闭
+      sourcemap: false, // 必须关闭
+      cssCodeSplit: false, // 必须关闭
+      reportCompressedSize: false, // 禁用体积计算
+      chunkSizeWarningLimit: 5000, // 调高到 5MB 避免干扰
       rollupOptions: {
-        maxParallelFileOps: 1, // 关键！限制并行文件处理
-        treeshake: false, // 禁用 Tree-shaking
+        maxParallelFileOps: 1, // 关键！单文件串行处理
+        treeshake: false, // 必须关闭
         output: {
-          manualChunks: {}, // 禁用自动拆包
+        // 移除 manualChunks 和 inlineDynamicImports 的冲突配置
+        // 使用以下替代方案来减少内存压力
+          compact: true, // 压缩输出代码（不进行完整minify）
+          hoistTransitiveImports: false, // 禁止提升间接导入
         },
+      },
+    },
+    worker: {
+      format: 'es',
+      rollupOptions: {
+        maxParallelFileOps: 1, // Worker 也限制并发
       },
     },
   }
