@@ -22,6 +22,19 @@
 
 ---
 
+## 👀 预览
+
+| <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo01.png"> | <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo02.png"> |
+| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo03.png"> | <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo04.png"> |
+| <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo05.png"> | <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo06.png"> |
+| <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo07.png"> | <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo08.png"> |
+| <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo09.png"> | <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo10.png"> |
+| <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo11.png"> | <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo12.png"> |
+| <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo13.png"> | <img src="https://raw.githubusercontent.com/zxc7563598/vue-bilibili-danmu-admin/main/src/assets/preview/demo14.png"> |
+
+---
+
 ## 📦 使用说明
 
 > **本项目需要本地构建打包后上传部署，不建议在低配服务器上执行构建命令。**
