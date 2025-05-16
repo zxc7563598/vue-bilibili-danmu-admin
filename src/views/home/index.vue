@@ -4,7 +4,7 @@
       <!-- 左侧欢迎模块（保留不变） -->
       <n-card class="min-w-200 w-30%">
         <div class="flex items-center">
-          <n-avatar round :size="60" :src="userStore.avatar" class="flex-shrink-0" />
+          <NAvatar round :size="60" :src="userStore.avatar" class="flex-shrink-0" />
           <div class="ml-20 flex-col">
             <span class="text-20 opacity-80">
               Hello, {{ userStore.nickName ?? userStore.username }}
@@ -38,7 +38,7 @@
           完全出于个人兴趣开发，开源免费，欢迎反馈建议，有空我都会乐于沟通。如果你愿意给我点个 Star 或请我喝杯咖啡就更感激了。
         </p>
         <footer class="mt-12 flex items-center justify-end">
-          <n-button
+          <NButton
             type="primary" tertiary tag="a" href="https://github.com/zxc7563598/php-bilibili-danmu"
             target="__blank"
           >
@@ -46,22 +46,19 @@
               <i class="i-fe:github mr-5 text-12" />
             </template>
             前往 GitHub 给作者点 Star
-          </n-button>
-          <n-button type="primary" ghost class="ml-12" tag="a" href="https://hejunjie.life" target="__blank">
+          </NButton>
+          <NButton type="primary" ghost class="ml-12" tag="a" href="https://hejunjie.life" target="__blank">
             <template #icon>
               <i class="i-fe:link mr-5 text-12" />
             </template>
             前往作者个人网站
-          </n-button>
-          <n-button
-            type="primary" class="ml-12" tag="a" href="mailto:junjie.he.925@gmail.com"
-            target="__blank"
-          >
+          </NButton>
+          <NButton type="primary" class="ml-12" tag="a" href="mailto:junjie.he.925@gmail.com" target="__blank">
             <template #icon>
               <i class="i-fe:mail mr-5 text-12" />
             </template>
             直接给作者发送邮件
-          </n-button>
+          </NButton>
         </footer>
       </n-card>
     </div>
@@ -131,6 +128,79 @@
 
 <script setup>
 import { useUserStore } from '@/store'
+import { NAvatar, NButton, NDescriptions, NDescriptionsItem, useNotification } from 'naive-ui'
+import version from '../../version.json'
+import api from './api'
 
 const userStore = useUserStore()
+const notification = useNotification()
+
+function handleNotification(logs) {
+  notification.create({
+    title: logs.title,
+    description: logs.description,
+    content: logs.content,
+    meta: logs.meta,
+    action: () => h(
+      NButton,
+      {
+        text: true,
+        type: 'primary',
+        onClick: () => {
+          api.downloadSourceCode(logs.version).then(({ data }) => {
+            window.open(data.url, '_blank', 'noopener,noreferrer')
+          })
+        },
+      },
+      {
+        default: () => '下载源码',
+      },
+    ),
+    avatar: () => h(NAvatar, {
+      size: 'small',
+      round: true,
+      src: '/avatar.jpg',
+    }),
+    onAfterLeave: () => {
+      api.readUpdateLogs(logs.id)
+    },
+  })
+}
+
+function handleVersion(new_version) {
+  notification.create({
+    content: () =>
+      h(
+        NDescriptions,
+        { title: '版本信息', column: 1, labelPlacement: 'left', size: 'small', bordered: false },
+        {
+          default: () => [
+            h(
+              NDescriptionsItem,
+              { label: '您当前的版本为' },
+              { default: () => version.version },
+            ),
+            h(
+              NDescriptionsItem,
+              { label: '当前最新的版本为' },
+              { default: () => new_version },
+            ),
+          ],
+        },
+      ),
+  })
+}
+
+function getUpdateLogs() {
+  api.getUpdateLogs().then(({ data }) => {
+    handleVersion(data.logs?.[0]?.version)
+    data.logs.forEach((logs) => {
+      handleNotification(logs)
+    })
+  })
+}
+
+onMounted(async () => {
+  getUpdateLogs()
+})
 </script>
