@@ -159,7 +159,7 @@ function handleNotification(logs) {
     avatar: () => h(NAvatar, {
       size: 'small',
       round: true,
-      src: '/avatar.jpg',
+      src: `${import.meta.env.VITE_PUBLIC_PATH}/avatar.jpg`,
     }),
     onAfterLeave: () => {
       api.readUpdateLogs(logs.id)
