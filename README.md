@@ -1,5 +1,7 @@
 # vue-bilibili-danmu-admin
 
+⚠️ 本项目仅供学习交流使用，禁止用于商业或非法用途。
+
 本项目是 [`php-bilibili-danmu`](https://github.com/zxc7563598/php-bilibili-danmu) 的 **前端管理后台（独立构建版本）** ，用于配合弹幕服务端使用，实现**更完整的**后台控制功能。
 
 ## ❓ 为什么要单独开一个仓库？
