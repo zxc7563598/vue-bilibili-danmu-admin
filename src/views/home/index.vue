@@ -128,7 +128,7 @@
 
 <script setup>
 import { useUserStore } from '@/store'
-import { NAvatar, NButton, NDescriptions, NDescriptionsItem, useNotification } from 'naive-ui'
+import { NAvatar, NButton, NDescriptions, NDescriptionsItem, NText, useNotification } from 'naive-ui'
 import version from '../../version.json'
 import api from './api'
 
@@ -169,10 +169,10 @@ function handleNotification(logs) {
 
 function handleVersion(new_version) {
   notification.create({
-    content: () =>
+    content: () => [
       h(
         NDescriptions,
-        { title: '版本信息', column: 1, labelPlacement: 'left', size: 'small', bordered: false },
+        { title: '版本信息', column: 1, labelPlacement: 'left', size: 'small', bordered: false, class: 'mb-8' },
         {
           default: () => [
             h(
@@ -188,6 +188,18 @@ function handleVersion(new_version) {
           ],
         },
       ),
+      version.version !== new_version
+        ? h(
+            NText,
+            { type: 'error' },
+            { default: () => '您当前并非最新版本，建议进行更新' },
+          )
+        : h(
+            NText,
+            { type: 'success' },
+            { default: () => '恭喜，您当前为最新版本' },
+          ),
+    ],
   })
 }
 
