@@ -48,7 +48,7 @@
         <div class="h-450 w-700">
           <WordCloud
             :words="wordList" :width="700" :height="450" font-family="Arial" :font-sizes="[12, 60]"
-            color="random-dark" background-color="#fff"
+            :color="randomColor" background-color="#fff"
           />
         </div>
       </n-card>
@@ -140,7 +140,7 @@ async function dailyActive(uid, year, month) {
   monthData.value = []
   currentMonth.value = 0
   try {
-    const { data = [] } = await api.dailyActive(uid.value, year, month)
+    const { data = [] } = await api.dailyActive(uid, year, month)
     monthData.value = data.data
     currentMonth.value = data.month
   }
@@ -166,6 +166,10 @@ async function generateWordCloudFromText(item) {
     showFooter: false,
     title: `用户：${item.name}`,
   })
+}
+function randomColor() {
+  const colors = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6']
+  return colors[Math.floor(Math.random() * colors.length)]
 }
 
 onMounted(() => {
