@@ -133,6 +133,7 @@
               <p>用户名：<b>@name@</b></p>
               <p>总签到天数：<b>@total@</b></p>
               <p>连续签到天数：<b>@serial@</b></p>
+              <p>用户总积分：<b>@total_point@</b></p>
             </n-alert>
 
             <n-form
