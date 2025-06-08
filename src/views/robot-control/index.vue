@@ -170,7 +170,7 @@
               <n-form-item label="签到词" path="keywords" feedback-style="margin-bottom: 20px;">
                 <n-input v-model:value="checkInForm.keywords" placeholder="一般建议增加符号避免误触发，例如: #签到" />
               </n-form-item>
-              <n-form-item label="赠送积分" path="points" feedback-style="margin-bottom: 20px;">
+              <n-form-item label="赠送硬币" path="points" feedback-style="margin-bottom: 20px;">
                 <n-input
                   v-model:value="checkInForm.points" type="text" :allow-input="onlyAllowNumber"
                   placeholder="为 0 则不赠送"
