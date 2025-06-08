@@ -163,7 +163,12 @@ const tableColumns = ref([
       ])
     },
   },
-  { title: '支付积分', key: 'point', minWidth: 80 },
+  { title: '支付', key: 'amount', minWidth: 100, render(row) {
+    return [
+      h('span', row.point),
+      h('span', row.amount_type),
+    ]
+  } },
   { title: '发货状态', key: 'status', minWidth: 80 },
   { title: '下单时间', key: 'create_time', minWidth: 180 },
   {
