@@ -93,6 +93,18 @@
       </n-card>
     </MeModal>
 
+    <MeModal ref="$checkUserCoin">
+      <n-card :bordered="false" size="small">
+        <NButton
+          v-permission="'ShopManagementUserManagementEditPoint'" strong secondary type="primary"
+          class="mb-12 w-100%" @click="openSetCoinModal"
+        >
+          点击添加变更记录
+        </NButton>
+        <n-data-table :columns="coinTableColumns" :data="coinTableData" :bordered="false" />
+      </n-card>
+    </MeModal>
+
     <MeModal ref="$setUserPoint">
       <n-card :bordered="false" size="small">
         <n-form
@@ -121,6 +133,35 @@
         </n-form>
       </n-card>
     </MeModal>
+
+    <MeModal ref="$setUserCoin">
+      <n-card :bordered="false" size="small">
+        <n-form
+          ref="editUserCoinRef" :model="editUserCoin" :rules="editUserCoinRules" label-placement="left"
+          label-width="auto" require-mark-placement="right-hanging" size="small"
+        >
+          <n-form-item label="变更类型" path="type">
+            <n-radio-group v-model:value="editUserCoin.type" name="editUserCoin-type">
+              <n-radio-button value="0">
+                增加
+              </n-radio-button>
+              <n-radio-button value="1">
+                减少
+              </n-radio-button>
+            </n-radio-group>
+            <template #feedback>
+              <p>用于增加或扣减用户硬币</p>
+            </template>
+          </n-form-item>
+          <n-form-item label="变更硬币" path="point" class="mt-20">
+            <n-input v-model:value="editUserCoin.point" :allow-input="onlyAllowNumber" placeholder="输入增加或扣减用户硬币" />
+            <template #feedback>
+              <p>输入增加或扣减用户硬币</p>
+            </template>
+          </n-form-item>
+        </n-form>
+      </n-card>
+    </MeModal>
   </CommonPage>
 </template>
 
@@ -143,6 +184,7 @@ const tableColumns = ref([
   { title: 'UID', key: 'uid', minWidth: 170 },
   { title: '名称', key: 'name', minWidth: 150 },
   { title: '积分', key: 'point', minWidth: 80 },
+  { title: '硬币', key: 'coin', minWidth: 80 },
   { title: '类型', key: 'vip_type', minWidth: 80 },
   { title: '开启时间', key: 'last_vip_at', minWidth: 180 },
   { title: '到期时间', key: 'end_vip_at', minWidth: 180 },
@@ -151,7 +193,7 @@ const tableColumns = ref([
     key: 'actions',
     align: 'right',
     fixed: 'right',
-    minWidth: 220,
+    minWidth: 320,
     render(row) {
       return [
         h(
@@ -178,6 +220,20 @@ const tableColumns = ref([
           },
           {
             default: () => '变更积分',
+            icon: () => h('i', { class: 'i-fe:dollar-sign text-14' }),
+          },
+        ),
+        h(
+          NButton,
+          {
+            size: 'small',
+            type: 'primary',
+            class: 'ml-5',
+            secondary: true,
+            onClick: () => checkUserCoin(row),
+          },
+          {
+            default: () => '变更硬币',
             icon: () => h('i', { class: 'i-fe:dollar-sign text-14' }),
           },
         ),
@@ -223,6 +279,46 @@ const pointTableColumns = ref([
   },
   { title: '变更积分', key: 'point', minWidth: 120 },
   { title: '变更后积分', key: 'after_point', minWidth: 80 },
+  { title: '变更时间', key: 'date', minWidth: 120 },
+])
+
+// 积分变更列表
+const coinTableData = ref([])
+const coinTableColumns = ref([
+  {
+    title: '操作类型',
+    key: 'name',
+    minWidth: 150,
+    render(row) {
+      return h('div', {
+        style: {
+          display: 'flex',
+          alignItems: 'center',
+        },
+      }, [
+        h(NImage, {
+          src: row.icon,
+          width: 40,
+          height: 40,
+          objectFit: 'cover',
+          previewDisabled: false, // true 表示不允许放大预览
+          style: {
+            borderRadius: '5px',
+          },
+        }),
+        h('div', {
+          style: {
+            display: 'flex',
+            alignItems: 'center',
+            height: '100%', // 占满容器高度
+            marginLeft: '5px',
+          },
+        }, row.name),
+      ])
+    },
+  },
+  { title: '变更硬币', key: 'point', minWidth: 120 },
+  { title: '变更后硬币', key: 'after_point', minWidth: 80 },
   { title: '变更时间', key: 'date', minWidth: 120 },
 ])
 
@@ -409,7 +505,7 @@ const [$checkUserPoint] = useModal()
 const editUserPointUserId = ref(0)
 function checkUserPoint(item = {}) {
   pointTableData.value = []
-  api.getUserRecords(item.user_id).then(({ data = [] }) => {
+  api.getUserPointRecords(item.user_id).then(({ data = [] }) => {
     pointTableData.value = data.records
     editUserPointUserId.value = item.user_id
   })
@@ -479,7 +575,7 @@ function openSetPointModal() {
         }
       })
       await setUserPoint()
-      await api.getUserRecords(editUserPointUserId.value).then(({ data = [] }) => {
+      await api.getUserPointRecords(editUserPointUserId.value).then(({ data = [] }) => {
         pointTableData.value = data.records
       })
     },
@@ -502,6 +598,107 @@ async function setUserPoint() {
   }
   finally {
     $setUserPoint.value.okLoading = false
+  }
+}
+
+// 查看用户硬币变更列表
+const [$checkUserCoin] = useModal()
+const editUserCoinUserId = ref(0)
+function checkUserCoin(item = {}) {
+  coinTableData.value = []
+  api.getUserCoinRecords(item.user_id).then(({ data = [] }) => {
+    coinTableData.value = data.records
+    editUserCoinUserId.value = item.user_id
+  })
+  $checkUserCoin.value?.open({
+    showCancel: false,
+    title: '硬币变更记录',
+    okText: '关闭',
+  })
+}
+
+// 点击添加变更记录弹窗
+const [$setUserCoin] = useModal()
+const editUserCoinRef = ref(null)
+const editUserCoinRules = ref({
+  type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请选择变更类型')
+      }
+      return true
+    },
+  },
+  point: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请输入硬币')
+      }
+      else if (Number(value) <= 0) {
+        return new Error('硬币变更不允许为 0')
+      }
+      return true
+    },
+  },
+})
+const editUserCoin = ref({
+  user_id: '', // 用户id
+  type: '0', // 类型
+  point: '', // 硬币
+})
+function openSetCoinModal() {
+  editUserCoin.value = {
+    user_id: editUserCoinUserId.value, // 用户id
+    type: '0', // 类型
+    point: '', // 硬币
+  }
+  $setUserCoin.value?.open({
+    showCancel: true,
+    title: '变更硬币',
+    cancelText: '关闭',
+    okText: '保存',
+    async onOk() {
+      if (!hasPermission('ShopManagementUserManagementEditPoint')) {
+        $message.error('您没有权限变更用户硬币')
+        return false
+      }
+      await editUserCoinRef.value?.validate((errors) => {
+        if (errors) {
+          errors.forEach((_errors) => {
+            _errors.forEach((item) => {
+              $message.error(item.message)
+            })
+          })
+          $setUserCoin.value.okLoading = false
+          return false
+        }
+      })
+      await setUserCoin()
+      await api.getUserCoinRecords(editUserCoinUserId.value).then(({ data = [] }) => {
+        coinTableData.value = data.records
+      })
+    },
+  })
+}
+
+// 变更用户硬币信息
+async function setUserCoin() {
+  $setUserCoin.value.okLoading = true
+  try {
+    await api.setUserCoin(
+      Number(editUserCoin.value.type),
+      editUserCoin.value.point,
+      editUserCoin.value.user_id,
+    )
+    $message.success('保存成功')
+  }
+  catch (err) {
+    console.error('存储失败', err)
+  }
+  finally {
+    $setUserCoin.value.okLoading = false
   }
 }
 
