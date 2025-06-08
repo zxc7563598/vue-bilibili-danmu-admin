@@ -34,6 +34,21 @@
               <p>用于展示的商品名称，不宜过长</p>
             </template>
           </n-form-item>
+          <n-form-item label="价格类型" path="amount_type" class="mt-20">
+            <n-radio-group v-model:value="editItems.amount_type" name="editItems-amount_type">
+              <n-radio-button value="0">
+                积分
+              </n-radio-button>
+              <n-radio-button value="1">
+                硬币
+              </n-radio-button>
+            </n-radio-group>
+            <template #feedback>
+              <p>商品的价格类型</p>
+              <p><b>积分</b>:用户开通大航海获得</p>
+              <p><b>硬币</b>:用户签到获得</p>
+            </template>
+          </n-form-item>
           <n-form-item label="商品价格" path="amount" class="mt-20">
             <n-input v-model:value="editItems.amount" type="text" :allow-input="onlyAllowNumber" placeholder="积分" />
             <template #feedback>
@@ -273,7 +288,12 @@ const tableColumns = [
     },
   },
   { title: '商品名称', key: 'name', minWidth: 150 },
-  { title: '商品价格', key: 'amount', minWidth: 80 },
+  { title: '商品价格', key: 'amount', minWidth: 80, render(row) {
+    return [
+      h('span', row.amount),
+      h('span', row.amount_type),
+    ]
+  } },
   { title: '状态', key: 'status', minWidth: 80 },
   { title: '商品类型', key: 'type', minWidth: 80 },
   { title: '排序', key: 'sort', minWidth: 80 },
@@ -408,6 +428,7 @@ const editItemsRules = ref({
 const editItems = ref({
   goods_id: 0, // 商品ID
   name: '', // 商品名称
+  amount_type: '0', // 价格类型
   amount: '', // 商品价格
   tips: '', // 购买说明
   cover_image: {
@@ -612,6 +633,7 @@ function checkGoods(item = {}) {
   editItems.value = {
     goods_id: 0, // 商品ID
     name: '', // 商品名称
+    amount_type: '0', // 价格类型
     amount: '', // 商品价格
     tips: '', // 购买说明
     cover_image: {
@@ -633,6 +655,7 @@ function checkGoods(item = {}) {
   serviceDescriptionImagesFiles.value = []
   api.details(item.goods_id).then(({ data = [] }) => {
     editItems.value = { ...editItems.value, ...data.goods }
+    editItems.value.amount_type = String(editItems.value.amount_type)
     editItems.value.amount = String(editItems.value.amount)
     editItems.value.type = String(editItems.value.type)
     editItems.value.status = String(editItems.value.status)
@@ -699,6 +722,7 @@ function handleAdd() {
   editItems.value = {
     goods_id: 0, // 商品ID
     name: '', // 商品名称
+    amount_type: '0', // 价格类型
     amount: null, // 商品价格
     tips: null, // 购买说明
     cover_image: {
@@ -751,6 +775,7 @@ async function setDataDetails() {
     await api.setDataDetails(
       editItems.value.goods_id,
       editItems.value.name,
+      editItems.value.amount_type,
       editItems.value.amount,
       editItems.value.tips,
       editItems.value.cover_image,
