@@ -3,7 +3,10 @@
     <div class="flex">
       <n-card v-if="!robot.loading" class="min-w-300 w-30%" title="机器人信息">
         <template #header-extra>
-          <NButton v-permission="'RobotControlUser'" strong secondary round type="primary" :loading="handleAuthActionLoading" @click="handleAuthAction">
+          <NButton
+            v-permission="'RobotControlUser'" strong secondary round type="primary"
+            :loading="handleAuthActionLoading" @click="handleAuthAction"
+          >
             {{ robot.is_login ? '退出登录' : '立即登录' }}
           </NButton>
         </template>
@@ -116,12 +119,9 @@
                   <i class="i-fe:warning" />
                 </n-icon>
               </template>
-              <p>目前签到功能已上线，但其最终用途仍在探索中。常见的用法包括：</p>
-              <p><b>发放签到积分，用于兑换商城奖品</b></p>
-              <p><b>提供某种签到货币，与商城积分独立，建立专属兑换体系</b></p>
-              <p>不过，这些方案还在讨论中。我们也在思考如何平衡功能实用性与系统复杂度，避免“白嫖”风险，同时保持用户参与的积极性。</p>
-              <p>本功能最初是根据用户反馈开发的，但对方未给出具体应用场景，因此我们决定先上线基础版本，再逐步完善。</p>
-              <p>如果你对签到系统有任何建议或想法，欢迎在 [这里这里点我] 下方评论区留言，我们会认真查看并积极回复。</p>
+              <p>用户每日可以通过发送特定弹幕进行一次签到</p>
+              <p>签到可以发放 <b>硬币</b> 用户在积分商城兑换商品</p>
+              <p>商品可以设置由 <b>积分</b> 或者是 <b>硬币</b> 支付</p>
             </n-alert>
             <n-alert title="可用的动态信息变量" class="mb-20" type="default" closable>
               <template #icon>
@@ -133,7 +133,8 @@
               <p>用户名：<b>@name@</b></p>
               <p>总签到天数：<b>@total@</b></p>
               <p>连续签到天数：<b>@serial@</b></p>
-              <p>用户总积分：<b>@total_point@</b></p>
+              <p>用户积分：<b>@total_point@</b></p>
+              <p>用户硬币：<b>@total_coin@</b></p>
             </n-alert>
 
             <n-form
@@ -811,7 +812,10 @@
             <NButton type="primary" dashed class="mb-12 w-100%" @click="scrollToSection('autorespondersRef')">
               自动回复
             </NButton>
-            <NButton v-permission="'RobotControlEdit'" type="primary" class="mb-12 w-100%" :loading="setConfigLoading" @click="setConfig">
+            <NButton
+              v-permission="'RobotControlEdit'" type="primary" class="mb-12 w-100%" :loading="setConfigLoading"
+              @click="setConfig"
+            >
               保存配置
             </NButton>
           </n-card>
@@ -885,13 +889,19 @@
             </n-radio-button>
           </n-radio-group>
         </n-form-item>
-        <n-form-item v-if="autorespondersForm.edit.silent === '1'" label="禁言时长" path="silent_minute" feedback-style="margin-bottom: 20px;">
+        <n-form-item
+          v-if="autorespondersForm.edit.silent === '1'" label="禁言时长" path="silent_minute"
+          feedback-style="margin-bottom: 20px;"
+        >
           <n-input
             v-model:value="autorespondersForm.edit.silent_minute" type="text" :allow-input="onlyAllowNumber"
             placeholder="分钟,最低为 1 分钟"
           />
         </n-form-item>
-        <n-form-item v-if="autorespondersForm.edit.silent === '1'" label="赎回金额" path="ransom_amount" feedback-style="margin-bottom: 20px;">
+        <n-form-item
+          v-if="autorespondersForm.edit.silent === '1'" label="赎回金额" path="ransom_amount"
+          feedback-style="margin-bottom: 20px;"
+        >
           <n-input
             v-model:value="autorespondersForm.edit.ransom_amount" type="text" :allow-input="onlyAllowNumber"
             placeholder="电池,最低为 1 电池,若设置 0 则代表不允许通过赠送礼物解除禁言"
