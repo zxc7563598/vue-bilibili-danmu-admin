@@ -1752,6 +1752,7 @@ async function getConfig() {
     checkInForm.value.type = String(data.check_in.type)
     checkInForm.value.keywords = data.check_in.keywords
     checkInForm.value.select = data.check_in.select
+    checkInForm.value.points = data.check_in.points
     checkInForm.value.success = data.check_in.success
     checkInForm.value.reply = data.check_in.reply
     // 自动回复
