@@ -138,6 +138,24 @@
                   </div>
                 </template>
               </n-form-item>
+              <n-form-item label="是否开启断开邮件" path="enable_disconnect_mail" class="mt-20">
+                <n-radio-group v-model:value="configForm.enable_disconnect_mail" name="configForm-enable_disconnect_mail">
+                  <n-radio-button value="0">
+                    否
+                  </n-radio-button>
+                  <n-radio-button value="1">
+                    是
+                  </n-radio-button>
+                </n-radio-group>
+                <template #feedback>
+                  <div style="font-size: 12px; color: #888;">
+                    <p>开启后，如果机器人出现网络或其他问题与直播间断开连接，将会通过邮件进行通知</p>
+                    <p class="mt-5">
+                      建议开启该功能，以便第一时间接收异常信息
+                    </p>
+                  </div>
+                </template>
+              </n-form-item>
               <n-form-item label="是否开启兑换邮件" path="enable_shop_mail" class="mt-20">
                 <n-radio-group v-model:value="configForm.enable_shop_mail" name="configForm-enable_shop_mail">
                   <n-radio-button value="0">
@@ -641,6 +659,7 @@ const configForm = ref({
   live_streaming_link: '', // 直播间链接
   user_login_password: '1', // 用户是否需要密码登录
   enable_aggregate_mail: '0', // 是否开启下播邮件
+  enable_disconnect_mail: '0', // 是否开启断开邮件
   enable_shop_mail: '0', // 是否开启兑换邮件
   email_address: '', // 邮箱
   address_as: '', // 称呼
@@ -965,6 +984,7 @@ async function getData() {
     configForm.value.live_streaming_link = data.live_streaming_link
     configForm.value.user_login_password = data.user_login_password
     configForm.value.enable_aggregate_mail = data.enable_aggregate_mail
+    configForm.value.enable_disconnect_mail = data.enable_disconnect_mail
     configForm.value.enable_shop_mail = data.enable_shop_mail
     configForm.value.email_address = data.email_address
     configForm.value.address_as = data.address_as
@@ -1034,6 +1054,7 @@ async function setData() {
       configForm.value.tribute_gift_order_successful_button,
       configForm.value.tribute_gift_order_successful_rankings,
       configForm.value.tribute_gift_order_successful_rankingslist,
+      configForm.value.enable_disconnect_mail,
       configForm.value.enable_aggregate_mail,
       configForm.value.enable_shop_mail,
       configForm.value.email_address,
