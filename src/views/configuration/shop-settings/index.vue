@@ -178,7 +178,7 @@
                 <n-input v-model:value="configForm.email_address" placeholder="邮箱地址" />
                 <template #feedback>
                   <div style="font-size: 12px; color: #888;">
-                    <p>指用于接受邮件的邮箱地址</p>
+                    <p>指用于接受邮件的邮箱地址，若开启有限通知，<b>邮箱</b>与<b>称呼</b>均不能为空</p>
                   </div>
                 </template>
               </n-form-item>
@@ -186,7 +186,7 @@
                 <n-input v-model:value="configForm.address_as" placeholder="称呼名称" />
                 <template #feedback>
                   <div style="font-size: 12px; color: #888;">
-                    <p>指希望在邮件中如何称呼你</p>
+                    <p>指希望在邮件中如何称呼你，若开启有限通知，<b>邮箱</b>与<b>称呼</b>均不能为空</p>
                   </div>
                 </template>
               </n-form-item>
