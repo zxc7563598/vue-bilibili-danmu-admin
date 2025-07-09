@@ -189,6 +189,18 @@
               <p>每次有人购买后销售数量涨多少，可以设置一个大一点的数，可以显得很受欢迎 ✅</p>
             </template>
           </n-form-item>
+          <n-form-item label="可购买规格数量" path="sub_num" class="mt-20">
+            <n-input
+              v-model:value="editItems.sub_num" type="text" :allow-input="onlyAllowNumber"
+              placeholder="可以同时购买多个规格"
+            />
+            <template #feedback>
+              <p>正常为1，只能选择1个规格进行购买，设置数量大于1时可以同时购买多个规格</p>
+              <p class="mt-5">
+                注意：同时购买多个并不影响价格，仅适用于某件商品可以自选多个的情况
+              </p>
+            </template>
+          </n-form-item>
           <n-data-table :columns="subsColumns" :data="editItems.subs" :bordered="false" class="mt-20" />
           <NButton strong secondary type="primary" class="mt-12 w-100%" @click="openSubsModal">
             添加规格
@@ -424,6 +436,15 @@ const editItemsRules = ref({
       return true
     },
   },
+  sub_num: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('请填写可购买规格数量')
+      }
+      return true
+    },
+  },
 })
 const editItems = ref({
   goods_id: 0, // 商品ID
@@ -444,6 +465,7 @@ const editItems = ref({
   sale_num: '0', // 销售数量
   sale_increase: '1', // 每次销售递增
   subs: [], // 商品规格
+  sub_num: '1', // 可购买规格数量
 })
 
 // 商品规格列表
@@ -649,6 +671,7 @@ function checkGoods(item = {}) {
     sale_num: '0', // 销售数量
     sale_increase: '1', // 每次销售递增
     subs: [], // 商品规格
+    sub_num: '1',
   }
   carouselImagesFiles.value = []
   detailsImagesFiles.value = []
@@ -662,6 +685,7 @@ function checkGoods(item = {}) {
     editItems.value.sort = String(editItems.value.sort)
     editItems.value.sale_num = String(editItems.value.sale_num)
     editItems.value.sale_increase = String(editItems.value.sale_increase)
+    editItems.value.sub_num = String(editItems.value.sub_num)
     editItems.value.carousel_images.forEach((item) => {
       carouselImagesFiles.value.push({
         id: item.path,
@@ -738,6 +762,7 @@ function handleAdd() {
     sale_num: '0', // 销售数量
     sale_increase: '1', // 每次销售递增
     subs: [], // 商品规格
+    sub_num: '1',
   }
   carouselImagesFiles.value = []
   detailsImagesFiles.value = []
@@ -788,6 +813,7 @@ async function setDataDetails() {
       editItems.value.sale_num,
       editItems.value.sale_increase,
       editItems.value.subs,
+      editItems.value.sub_num,
     )
     $message.success('保存成功')
   }
