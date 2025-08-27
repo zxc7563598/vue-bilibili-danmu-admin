@@ -440,13 +440,13 @@ function handleAdd() {
 async function setData() {
   $checkUser.value.okLoading = true
   try {
-    // await api.setData(
-    //   editItems.value.user_id,
-    //   editItems.value.uid,
-    //   editItems.value.name,
-    //   editItems.value.password,
-    //   editItems.value.vip_type,
-    // )
+    await api.setData(
+      editItems.value.user_id,
+      editItems.value.uid,
+      editItems.value.name,
+      editItems.value.password,
+      editItems.value.vip_type,
+    )
     $message.success('保存成功')
   }
   catch (err) {
