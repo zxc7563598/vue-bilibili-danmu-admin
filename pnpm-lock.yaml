@@ -47,6 +47,9 @@ importers:
       vue-router:
         specifier: ^4.5.0
         version: 4.5.0(vue@3.5.13(typescript@5.5.4))
+      vue3-word-cloud:
+        specifier: ^1.0.4
+        version: 1.0.4(vue@3.5.13(typescript@5.5.4))
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^4.3.0
@@ -3697,6 +3700,11 @@ packages:
     engines: {node: '>=12'}
     peerDependencies:
       vue: ^3.0.5
+
+  vue3-word-cloud@1.0.4:
+    resolution: {integrity: sha512-wGHVW6qu7Nt2+vT1McQkufKOCa+MqWPNQFuFEUVFuoai5CVCZclEozv8bKuhwOVJbCLCaVkNocWJ9Hi/HfTCVQ==}
+    peerDependencies:
+      vue: ^3.x
 
   vue@3.5.13:
     resolution: {integrity: sha512-wmeiSMxkZCSc+PM2w2VRsOYAZC8GdipNFRTsLSfodVqI9mbejKeXEGr8SckuLnrQPGe3oJN5c3K0vpoU9q/wCQ==}
@@ -7819,6 +7827,10 @@ snapshots:
       vue: 3.5.13(typescript@5.5.4)
 
   vue3-intro-step@1.0.5(vue@3.5.13(typescript@5.5.4)):
+    dependencies:
+      vue: 3.5.13(typescript@5.5.4)
+
+  vue3-word-cloud@1.0.4(vue@3.5.13(typescript@5.5.4)):
     dependencies:
       vue: 3.5.13(typescript@5.5.4)
 
