@@ -315,7 +315,25 @@
               :model="configForm" label-placement="left" label-width="auto"
               require-mark-placement="right-hanging" size="small"
             >
-              <n-form-item label="协议人名称" path="protocols_surname">
+              <n-form-item label="是否开启协议" path="protocols_enable">
+                <n-radio-group v-model:value="configForm.protocols_enable" name="configForm-protocols_enable">
+                  <n-radio-button value="0">
+                    否
+                  </n-radio-button>
+                  <n-radio-button value="1">
+                    是
+                  </n-radio-button>
+                </n-radio-group>
+                <template #feedback>
+                  <div style="font-size: 12px; color: #888;">
+                    <p>协议开启后，用户在积分商城兑换商品时需要签署本协议</p>
+                    <p class="mt-5">
+                      并非真正的协议，通常可以用来自定义为类似卖身契一类的娱乐内容，如果关闭则用户不再会看到该协议
+                    </p>
+                  </div>
+                </template>
+              </n-form-item>
+              <n-form-item label="协议人名称" path="protocols_surname" class="mt-20">
                 <n-input v-model:value="configForm.protocols_surname" type="text" placeholder="协议人名称" />
                 <template #feedback>
                   <div style="font-size: 12px; color: #888;">
@@ -702,6 +720,7 @@ const configForm = ref({
   vip_lv3_bonus_points: '0', // 开通总督奖励积分
   points_expire_mode: '0', // 积分过期模式
   points_expire_days: '0', // 积分过期天数
+  protocols_enable: '1', // 是否开启协议
   protocols_surname: '', // 协议人名称
   protocols_uid: '', // 协议人UID
   protocols_name: '', // 协议名称
@@ -1029,6 +1048,7 @@ async function getData() {
     configForm.value.vip_lv3_bonus_points = data.vip_lv3_bonus_points
     configForm.value.points_expire_mode = data.points_expire_mode
     configForm.value.points_expire_days = data.points_expire_days
+    configForm.value.protocols_enable = data.protocols_enable
     configForm.value.protocols_surname = data.protocols_surname
     configForm.value.protocols_uid = data.protocols_uid
     configForm.value.protocols_name = data.protocols_name
@@ -1066,6 +1086,7 @@ async function setData() {
       configForm.value.theme_color,
       configForm.value.live_streaming_link,
       configForm.value.user_login_password,
+      configForm.value.protocols_enable,
       configForm.value.protocols_surname,
       configForm.value.protocols_uid,
       configForm.value.protocols_name,
