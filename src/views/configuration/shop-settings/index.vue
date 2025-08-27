@@ -273,6 +273,38 @@
                   </div>
                 </template>
               </n-form-item>
+              <n-form-item label="积分过期模式" path="points_expire_mode" class="mt-20">
+                <n-radio-group v-model:value="configForm.points_expire_mode" name="configForm-points_expire_mode">
+                  <n-radio-button value="0">
+                    永久有效
+                  </n-radio-button>
+                  <n-radio-button value="1">
+                    根据不活跃天数清零
+                  </n-radio-button>
+                </n-radio-group>
+                <template #feedback>
+                  <div style="font-size: 12px; color: #888;">
+                    <p><b>永久有效</b>：积分不会被自动清空，仅会随着用户的使用消耗</p>
+                    <p class="mt-5">
+                      <b>根据不活跃天数清零</b>：用户在获得积分后，如果在设置的天数内未进行积分消费，则清空积分
+                    </p>
+                  </div>
+                </template>
+              </n-form-item>
+              <n-form-item label="积分过期天数" path="points_expire_days" class="mt-20">
+                <n-input
+                  v-model:value="configForm.points_expire_days" type="text" :allow-input="onlyAllowNumber"
+                  placeholder="积分过期天数"
+                />
+                <template #feedback>
+                  <div style="font-size: 12px; color: #888;">
+                    <p>天数，多少天过期</p>
+                    <p class="mt-5">
+                      <b>注意</b>：永久有效的模式下，此配置不会生效，无论设置任何内容都不会有任何影响
+                    </p>
+                  </div>
+                </template>
+              </n-form-item>
             </n-form>
           </n-card>
         </div>
@@ -668,6 +700,8 @@ const configForm = ref({
   vip_lv1_bonus_points: '0', // 开通舰长奖励积分
   vip_lv2_bonus_points: '0', // 开通提督奖励积分
   vip_lv3_bonus_points: '0', // 开通总督奖励积分
+  points_expire_mode: '0', // 积分过期模式
+  points_expire_days: '0', // 积分过期天数
   protocols_surname: '', // 协议人名称
   protocols_uid: '', // 协议人UID
   protocols_name: '', // 协议名称
@@ -993,6 +1027,8 @@ async function getData() {
     configForm.value.vip_lv1_bonus_points = data.vip_lv1_bonus_points
     configForm.value.vip_lv2_bonus_points = data.vip_lv2_bonus_points
     configForm.value.vip_lv3_bonus_points = data.vip_lv3_bonus_points
+    configForm.value.points_expire_mode = data.points_expire_mode
+    configForm.value.points_expire_days = data.points_expire_days
     configForm.value.protocols_surname = data.protocols_surname
     configForm.value.protocols_uid = data.protocols_uid
     configForm.value.protocols_name = data.protocols_name
@@ -1040,6 +1076,8 @@ async function setData() {
       configForm.value.vip_lv1_bonus_points,
       configForm.value.vip_lv2_bonus_points,
       configForm.value.vip_lv3_bonus_points,
+      configForm.value.points_expire_mode,
+      configForm.value.points_expire_days,
       configForm.value.virtual_gift_order_successful_icon.path,
       configForm.value.virtual_gift_order_successful_title,
       configForm.value.virtual_gift_order_successful_content,
