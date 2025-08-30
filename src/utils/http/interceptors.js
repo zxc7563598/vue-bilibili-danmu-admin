@@ -1,7 +1,19 @@
 import { useAuthStore } from '@/store'
 import { lStorage } from '@/utils'
-import CryptoJS from 'crypto-js'
+import { encryptRequest } from 'hejunjie-encrypted-request'
 import { resolveResError } from './helpers'
+
+let cachedPublicKey = null
+export async function loadPublicKey() {
+  if (cachedPublicKey)
+    return cachedPublicKey
+  const res = await fetch(`${import.meta.env.VITE_AXIOS_BASE_URL}/public_key`)
+  if (!res.ok)
+    throw new Error('Failed to load public key')
+  const key = await res.text()
+  cachedPublicKey = key
+  return key
+}
 
 export function setupInterceptors(axiosInstance) {
   const SUCCESS_CODES = [0, 200]
@@ -12,9 +24,7 @@ export function setupInterceptors(axiosInstance) {
         return Promise.resolve(data)
       }
       const code = data?.code ?? status
-
       const needTip = config?.needTip !== false
-
       // 根据code处理对应的操作，并返回处理后的message
       const message = resolveResError(code, data?.message ?? statusText, needTip)
 
@@ -27,7 +37,7 @@ export function setupInterceptors(axiosInstance) {
   axiosInstance.interceptors.response.use(resResolve, resReject)
 }
 
-function reqResolve(config) {
+async function reqResolve(config) {
   // 处理不需要token的请求
   if (config.needToken !== false) {
     const { accessToken } = useAuthStore()
@@ -42,22 +52,10 @@ function reqResolve(config) {
     if (config.data === undefined) {
       config.data = {}
     }
-    const secretKey = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_AES_KEY) // 16字节的密钥
-    const iv = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_AES_IV) // 16字节的初始化向量
-    let param = config.data
-    if (config.removeEmpty !== false) {
-      param = removeEmptyValues(config.data)
+    const options = {
+      rsaPubKey: await loadPublicKey(),
     }
-    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(param), secretKey, {
-      iv,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    })
-    const en_data = encrypted.toString()
-    const timestamp = Math.floor(Date.now() / 1000)
-    const signKey = import.meta.env.VITE_SIGN_KEY
-    const sign = CryptoJS.MD5(signKey + timestamp).toString()
-    config.data = { en_data, timestamp, sign }
+    config.data = encryptRequest(removeEmptyValues(config.data), options)
   }
   else {
     config.headers['Content-Type'] = 'multipart/form-data'
