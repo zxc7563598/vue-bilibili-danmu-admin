@@ -3,7 +3,7 @@ import { setupInterceptors } from './interceptors'
 
 export function createAxios(options = {}) {
   const defaultOptions = {
-    baseURL: `${import.meta.env.VITE_AXIOS_BASE_URL}/admin-api`,
+    baseURL: `${import.meta.env.VITE_AXIOS_BASE_URL}/admin-api-v2`,
     timeout: 12000,
   }
   const service = axios.create({
