@@ -7,8 +7,8 @@
         <div ref="storeSettingsRef">
           <n-card title="商城设置">
             <n-form
-              :model="configForm" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              :model="configForm" label-placement="left" label-width="auto" require-mark-placement="right-hanging"
+              size="small"
             >
               <n-form-item label="登录页面背景图" path="login_background_image">
                 <n-upload directory-dnd :show-file-list="false" @before-upload="loginBackgroundUploadHandler">
@@ -117,8 +117,8 @@
         <div ref="emailNotificationsRef" class="mt-12">
           <n-card title="邮件通知">
             <n-form
-              :model="configForm" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              :model="configForm" label-placement="left" label-width="auto" require-mark-placement="right-hanging"
+              size="small"
             >
               <n-form-item label="是否开启下播邮件" path="enable_aggregate_mail">
                 <n-radio-group v-model:value="configForm.enable_aggregate_mail" name="configForm-enable_aggregate_mail">
@@ -139,7 +139,10 @@
                 </template>
               </n-form-item>
               <n-form-item label="是否开启断开邮件" path="enable_disconnect_mail" class="mt-20">
-                <n-radio-group v-model:value="configForm.enable_disconnect_mail" name="configForm-enable_disconnect_mail">
+                <n-radio-group
+                  v-model:value="configForm.enable_disconnect_mail"
+                  name="configForm-enable_disconnect_mail"
+                >
                   <n-radio-button value="0">
                     否
                   </n-radio-button>
@@ -198,8 +201,8 @@
         <div ref="pointsSettingsRef" class="mt-12">
           <n-card title="积分相关">
             <n-form
-              :model="configForm" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              :model="configForm" label-placement="left" label-width="auto" require-mark-placement="right-hanging"
+              size="small"
             >
               <n-form-item label="是否开启礼物记录" path="gift_records">
                 <n-radio-group v-model:value="configForm.gift_records" name="configForm-gift_records">
@@ -281,6 +284,9 @@
                   <n-radio-button value="1">
                     根据不活跃天数清零
                   </n-radio-button>
+                  <n-radio-button value="2">
+                    月初清零
+                  </n-radio-button>
                 </n-radio-group>
                 <template #feedback>
                   <div style="font-size: 12px; color: #888;">
@@ -288,10 +294,18 @@
                     <p class="mt-5">
                       <b>根据不活跃天数清零</b>：用户在获得积分后，如果在设置的天数内未进行积分消费，则清空积分
                     </p>
+                    <p class="mt-5">
+                      <b>月初清零</b>：每月1日将用户的积分清空
+                      <br>
+                      <b>谨慎开启，该功能开启后每月1日0点会清空所有用户积分</b>
+                    </p>
                   </div>
                 </template>
               </n-form-item>
-              <n-form-item label="积分过期天数" path="points_expire_days" class="mt-20">
+              <n-form-item
+                v-if="configForm.points_expire_mode === '1'" label="积分过期天数" path="points_expire_days"
+                class="mt-20"
+              >
                 <n-input
                   v-model:value="configForm.points_expire_days" type="text" :allow-input="onlyAllowNumber"
                   placeholder="积分过期天数"
@@ -312,8 +326,8 @@
         <div ref="storePolicyRef" class="mt-12">
           <n-card title="商城协议">
             <n-form
-              :model="configForm" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              :model="configForm" label-placement="left" label-width="auto" require-mark-placement="right-hanging"
+              size="small"
             >
               <n-form-item label="是否开启协议" path="protocols_enable">
                 <n-radio-group v-model:value="configForm.protocols_enable" name="configForm-protocols_enable">
@@ -412,8 +426,8 @@
               <p>四部分可以自由设置</p>
             </n-alert>
             <n-form
-              :model="configForm" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              :model="configForm" label-placement="left" label-width="auto" require-mark-placement="right-hanging"
+              size="small"
             >
               <n-form-item label="下单成功图标" path="virtual_gift_order_successful_icon" class="mt-20">
                 <n-upload
@@ -473,8 +487,8 @@
               <p>四部分可以自由设置</p>
             </n-alert>
             <n-form
-              :model="configForm" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              :model="configForm" label-placement="left" label-width="auto" require-mark-placement="right-hanging"
+              size="small"
             >
               <n-form-item label="下单成功图标" path="realism_gift_order_successful_icon" class="mt-20">
                 <n-upload
@@ -534,8 +548,8 @@
               <p>四部分可以自由设置</p>
             </n-alert>
             <n-form
-              :model="configForm" label-placement="left" label-width="auto"
-              require-mark-placement="right-hanging" size="small"
+              :model="configForm" label-placement="left" label-width="auto" require-mark-placement="right-hanging"
+              size="small"
             >
               <n-form-item label="下单成功图标" path="tribute_gift_order_successful_icon" class="mt-20">
                 <n-upload
@@ -636,7 +650,10 @@
             <NButton type="primary" dashed class="mb-12 w-100%" @click="scrollToSection('tributeGiftOrderRef')">
               贡品礼物下单
             </NButton>
-            <NButton v-permission="'ConfigurationShopSettingsEdit'" type="primary" class="mb-12 w-100%" :loading="setDataLoading" @click="setData">
+            <NButton
+              v-permission="'ConfigurationShopSettingsEdit'" type="primary" class="mb-12 w-100%"
+              :loading="setDataLoading" @click="setData"
+            >
               保存配置
             </NButton>
           </n-card>
