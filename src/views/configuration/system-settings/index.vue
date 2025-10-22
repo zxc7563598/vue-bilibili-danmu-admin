@@ -64,48 +64,6 @@
                   </div>
                 </template>
               </n-form-item>
-              <n-form-item label="AES 加密 KEY" path="system_aes_key" class="mt-10">
-                <n-input v-model:value="configForm.system_aes_key" placeholder="AES 加密 KEY" />
-                <template #feedback>
-                  <div style="font-size: 12px; color: #888;">
-                    <p>此配置项决定项目接口与前端页面之间数据的加密和解密过程。</p>
-                    <p class="mt-5">
-                      AES 加密 KEY 用于对前端发送到后端的数据进行加密，同时也用于后端返回给前端的数据的解密。
-                    </p>
-                    <p class="mt-5">
-                      调整此密钥会影响整个项目中的数据安全性，特别是在积分商城等涉及用户敏感数据传输的功能模块中。
-                    </p>
-                  </div>
-                </template>
-              </n-form-item>
-              <n-form-item label="AES 加密 IV" path="system_aes_iv" class="mt-10">
-                <n-input v-model:value="configForm.system_aes_iv" placeholder="AES 加密 IV" />
-                <template #feedback>
-                  <div style="font-size: 12px; color: #888;">
-                    <p>此配置项决定项目接口与前端页面之间数据的加密和解密过程。</p>
-                    <p class="mt-5">
-                      AES 加密 KEY 用于对前端发送到后端的数据进行加密，同时也用于后端返回给前端的数据的解密。
-                    </p>
-                    <p class="mt-5">
-                      调整此密钥会影响整个项目中的数据安全性，特别是在积分商城等涉及用户敏感数据传输的功能模块中。
-                    </p>
-                  </div>
-                </template>
-              </n-form-item>
-              <n-form-item label="签名 KEY" path="system_key" class="mt-10">
-                <n-input v-model:value="configForm.system_key" placeholder="签名 KEY" />
-                <template #feedback>
-                  <div style="font-size: 12px; color: #888;">
-                    <p>此配置项决定项目接口与前端页面之间的数据签名机制，用于确保数据在传输过程中未被篡改。</p>
-                    <p class="mt-5">
-                      签名 KEY 用于生成请求数据的签名，并通过接口校验签名的正确性。
-                    </p>
-                    <p class="mt-5">
-                      调整此密钥会影响整个项目中接口的请求验证过程，特别是在积分商城等涉及敏感操作的功能模块中。
-                    </p>
-                  </div>
-                </template>
-              </n-form-item>
             </n-form>
           </n-card>
         </div>
@@ -313,9 +271,6 @@ const configForm = ref({
   shop_name: '', // 商城名称
   shop_url: '', // 商城链接
   system_api_url: '', // 项目地址
-  system_aes_key: '', // AES加密KEY
-  system_aes_iv: '', // AES加密IV
-  system_key: '', // 签名KEY
   host: '', // 项目启动地址
   listen: '', // 项目启动端口
   re_open_host: '', // 重启项目地址
@@ -379,9 +334,6 @@ async function getData() {
     configForm.value.shop_name = data.shop_name
     configForm.value.shop_url = data.shop_url
     configForm.value.system_api_url = data.system_api_url
-    configForm.value.system_aes_key = data.system_aes_key
-    configForm.value.system_aes_iv = data.system_aes_iv
-    configForm.value.system_key = data.system_key
     configForm.value.host = data.host
     configForm.value.listen = data.listen
     configForm.value.re_open_host = data.re_open_host
@@ -423,9 +375,6 @@ async function setConfig() {
       configForm.value.shop_name,
       configForm.value.shop_url,
       configForm.value.system_api_url,
-      configForm.value.system_aes_key,
-      configForm.value.system_aes_iv,
-      configForm.value.system_key,
       configForm.value.host,
       configForm.value.listen,
       configForm.value.re_open_host,
