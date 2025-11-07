@@ -252,6 +252,7 @@
               <p>对方高能榜人数：<b>@online_num@</b></p>
               <p>对方高能榜总计贡献度：<b>@online_score@</b></p>
               <p>对方高能榜前三名贡献度：<b>@top_three_score@</b></p>
+              <p>对方舰长总数：<b>@vip_num@</b></p>
             </n-alert>
 
             <n-form
