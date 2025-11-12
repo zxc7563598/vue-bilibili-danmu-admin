@@ -135,6 +135,8 @@
               <p>连续签到天数：<b>@serial@</b></p>
               <p>用户积分：<b>@total_point@</b></p>
               <p>用户硬币：<b>@total_coin@</b></p>
+              <p>用户航海类型：<b>@guard@</b></p>
+              <p>主播名称：<b>@up_name@</b></p>
             </n-alert>
 
             <n-form
@@ -305,6 +307,15 @@
               <p>每次发送时，系统会从这些信息中随机选择一条进行发送。</p>
               <p>建议控制留言的发言长度，过长的信息会被拆分成多条发送，可能会因发言频率限制而影响体验。</p>
               <p>由于 B 站的限制，弹幕发送间隔不能低于 3 秒，通常建议将间隔时间设置为 5 秒以上，以避免触发风控问题。</p>
+            </n-alert>
+            <n-alert title="可用的动态信息" class="mb-20" type="default" closable>
+              <template #icon>
+                <n-icon>
+                  <i class="i-fe:warning" />
+                </n-icon>
+              </template>
+              <p>您可以在内容中使用以下动态变量，发送时将自动替换为实际内容：</p>
+              <p>主播名称：<b>@up_name@</b></p>
             </n-alert>
             <n-form
               ref="timingFormRef" :model="timingForm" :rules="timingRules" label-placement="left"
@@ -505,6 +516,8 @@
               </template>
               <p>您可以在欢迎语中使用以下动态变量，发送时将自动替换为实际内容：</p>
               <p>名称：<b>@name@</b></p>
+              <p>用户航海类型：<b>@guard@</b></p>
+              <p>主播名称：<b>@up_name@</b></p>
             </n-alert>
             <n-form
               ref="enterFormRef" :model="enterForm" :rules="enterRules" label-placement="left" label-width="auto"
@@ -590,6 +603,8 @@
               </template>
               <p>您可以在感谢语中使用以下动态变量，发送时将自动替换为实际内容：</p>
               <p>名称：<b>@name@</b></p>
+              <p>用户航海类型：<b>@guard@</b></p>
+              <p>主播名称：<b>@up_name@</b></p>
             </n-alert>
             <n-form
               ref="followFormRef" :model="followForm" :rules="followRules" label-placement="left"
@@ -675,6 +690,8 @@
               </template>
               <p>您可以在感谢语中使用以下动态变量，发送时将自动替换为实际内容：</p>
               <p>名称：<b>@name@</b></p>
+              <p>用户航海类型：<b>@guard@</b></p>
+              <p>主播名称：<b>@up_name@</b></p>
             </n-alert>
             <n-form
               ref="shareFormRef" :model="shareForm" :rules="shareRules" label-placement="left" label-width="auto"
@@ -851,6 +868,8 @@
         <p>在自动回复内容中，可以使用以下动态变量，实际发送时将被替换为对应信息：</p>
         <p>命中的关键词：<b>@keywords@</b></p>
         <p>发送人昵称：<b>@name@</b></p>
+        <p>用户航海类型：<b>@guard@</b></p>
+        <p>主播名称：<b>@up_name@</b></p>
       </n-alert>
       <n-alert title="关于安全词" class="mb-20" type="default" closable>
         <template #icon>
