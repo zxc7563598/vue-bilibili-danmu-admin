@@ -319,6 +319,47 @@
                   </div>
                 </template>
               </n-form-item>
+              <n-form-item label="是否开启礼物返利" path="rebate_enable" class="mt-20">
+                <n-radio-group v-model:value="configForm.rebate_enable" name="configForm-rebate_enable">
+                  <n-radio-button value="0">
+                    否
+                  </n-radio-button>
+                  <n-radio-button value="1">
+                    是
+                  </n-radio-button>
+                </n-radio-group>
+                <template #feedback>
+                  <div style="font-size: 12px; color: #888;">
+                    <p>开启该功能后，用户在直播间送出礼物时，系统会根据「礼物电池数 × 返利比例」计算应返还的积分并进行增加。</p>
+                    <p class="mt-5">
+                      若计算结果为小数，则向下取整（例如：1.5 → 1，0.8 → 0）。
+                    </p>
+                    <p class="mt-5">
+                      若计算结果小于「最低返利积分」，则不为用户增加积分。
+                    </p>
+                  </div>
+                </template>
+              </n-form-item>
+              <n-form-item label="返利比例" path="rebate_proportion" class="mt-20">
+                <n-input
+                  v-model:value="configForm.rebate_proportion" type="text" :allow-input="onlyAllowDecimal" placeholder="数字类型，支持小数"
+                />
+                <template #feedback>
+                  <div style="font-size: 12px; color: #888;">
+                    <p>例如：当返利比例设置为 0.1 时，用户送出价值 10 电池 的礼物，将会获得 1 积分。</p>
+                  </div>
+                </template>
+              </n-form-item>
+              <n-form-item label="最低返利积分" path="min_rebate_point" class="mt-20">
+                <n-input
+                  v-model:value="configForm.min_rebate_point" type="text" :allow-input="onlyAllowDecimal" placeholder="最低返利积分，用于限制返利生效的门槛"
+                />
+                <template #feedback>
+                  <div style="font-size: 12px; color: #888;">
+                    <p>例如：当最低返利积分设置为 2，返利比例为 0.1 时，用户需送出 20 电池及以上 的礼物才会获得积分</p>
+                  </div>
+                </template>
+              </n-form-item>
             </n-form>
           </n-card>
         </div>
@@ -732,6 +773,9 @@ const configForm = ref({
   address_as: '', // 称呼
   gift_records: '1', // 是否开启礼物记录
   listening_open_vip: '1', // 大航海监听
+  rebate_enable: '0', // 是否开启礼物返利
+  rebate_proportion: '0', // 返利比例
+  min_rebate_point: '0', // 最低返利积分
   vip_lv1_bonus_points: '0', // 开通舰长奖励积分
   vip_lv2_bonus_points: '0', // 开通提督奖励积分
   vip_lv3_bonus_points: '0', // 开通总督奖励积分
@@ -1060,6 +1104,9 @@ async function getData() {
     configForm.value.address_as = data.address_as
     configForm.value.gift_records = data.gift_records
     configForm.value.listening_open_vip = data.listening_open_vip
+    configForm.value.rebate_enable = data.rebate_enable
+    configForm.value.rebate_proportion = data.rebate_proportion
+    configForm.value.min_rebate_point = data.min_rebate_point
     configForm.value.vip_lv1_bonus_points = data.vip_lv1_bonus_points
     configForm.value.vip_lv2_bonus_points = data.vip_lv2_bonus_points
     configForm.value.vip_lv3_bonus_points = data.vip_lv3_bonus_points
@@ -1116,6 +1163,9 @@ async function setData() {
       configForm.value.vip_lv3_bonus_points,
       configForm.value.points_expire_mode,
       configForm.value.points_expire_days,
+      configForm.value.rebate_enable,
+      configForm.value.rebate_proportion,
+      configForm.value.min_rebate_point,
       configForm.value.virtual_gift_order_successful_icon.path,
       configForm.value.virtual_gift_order_successful_title,
       configForm.value.virtual_gift_order_successful_content,
@@ -1149,6 +1199,10 @@ async function setData() {
 // 只允许输入数字
 function onlyAllowNumber(value) {
   return !value || /^\d+$/.test(value)
+}
+
+function onlyAllowDecimal(value) {
+  return !value || /^\d*(?:\.\d*)?$/.test(value)
 }
 
 onMounted(async () => {
