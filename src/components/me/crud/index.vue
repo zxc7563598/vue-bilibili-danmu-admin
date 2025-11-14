@@ -31,14 +31,8 @@
   </AppCard>
 
   <NDataTable
-    :remote="remote"
-    :loading="loading"
-    :scroll-x="scrollX"
-    :columns="columns"
-    :data="tableData"
-    :row-key="(row) => row[rowKey]"
-    :pagination="isPagination ? pagination : false"
-    @update:checked-row-keys="onChecked"
+    :remote="remote" :loading="loading" :scroll-x="scrollX" :columns="columns" :data="tableData"
+    :row-key="(row) => row[rowKey]" :pagination="isPagination ? pagination : false" @update:checked-row-keys="onChecked"
     @update:page="onPageChange"
   />
 </template>
@@ -61,6 +55,10 @@ const props = defineProps({
   isPagination: {
     type: Boolean,
     default: true,
+  },
+  pageSize: {
+    type: Number,
+    default: 20,
   },
   scrollX: {
     type: Number,
@@ -107,7 +105,7 @@ const initQuery = { ...props.queryItems }
 const tableData = ref([])
 const pagination = reactive({
   page: 1,
-  pageSize: 30,
+  pageSize: props.pageSize,
   prefix({ itemCount }) {
     return t('common.PaginationTotals', { total: itemCount })
   },

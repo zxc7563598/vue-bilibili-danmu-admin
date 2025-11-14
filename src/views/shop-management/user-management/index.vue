@@ -89,7 +89,10 @@
         >
           点击添加变更记录
         </NButton>
-        <n-data-table :columns="pointTableColumns" :data="pointTableData" :bordered="false" />
+        <MeCrud
+          ref="$pointTable" v-model:query-items="pointTableQueryItems" :page-size="6" :scroll-x="500"
+          :columns="pointTableColumns" :get-data="api.getUserPointRecords"
+        />
       </n-card>
     </MeModal>
 
@@ -101,7 +104,10 @@
         >
           点击添加变更记录
         </NButton>
-        <n-data-table :columns="coinTableColumns" :data="coinTableData" :bordered="false" />
+        <MeCrud
+          ref="$coinTable" v-model:query-items="coinTableQueryItems" :page-size="6" :scroll-x="500"
+          :columns="coinTableColumns" :get-data="api.getUserCoinRecords"
+        />
       </n-card>
     </MeModal>
 
@@ -243,7 +249,7 @@ const tableColumns = ref([
 ])
 
 // 积分变更列表
-const pointTableData = ref([])
+const $pointTable = ref(null)
 const pointTableColumns = ref([
   {
     title: '操作类型',
@@ -277,13 +283,13 @@ const pointTableColumns = ref([
       ])
     },
   },
-  { title: '变更积分', key: 'point', minWidth: 120 },
-  { title: '变更后积分', key: 'after_point', minWidth: 80 },
+  { title: '变更积分', key: 'currency', minWidth: 120 },
+  { title: '变更后', key: 'after_currency', minWidth: 80 },
   { title: '变更时间', key: 'date', minWidth: 120 },
 ])
 
 // 积分变更列表
-const coinTableData = ref([])
+const $coinTable = ref(null)
 const coinTableColumns = ref([
   {
     title: '操作类型',
@@ -317,8 +323,8 @@ const coinTableColumns = ref([
       ])
     },
   },
-  { title: '变更硬币', key: 'point', minWidth: 120 },
-  { title: '变更后硬币', key: 'after_point', minWidth: 80 },
+  { title: '变更硬币', key: 'currency', minWidth: 120 },
+  { title: '变更后', key: 'after_currency', minWidth: 80 },
   { title: '变更时间', key: 'date', minWidth: 120 },
 ])
 
@@ -502,17 +508,18 @@ async function resetPassword() {
 
 // 查看用户积分变更列表
 const [$checkUserPoint] = useModal()
-const editUserPointUserId = ref(0)
+const pointTableQueryItems = ref({
+  user_id: '',
+})
 function checkUserPoint(item = {}) {
-  pointTableData.value = []
-  api.getUserPointRecords(item.user_id).then(({ data = [] }) => {
-    pointTableData.value = data.records
-    editUserPointUserId.value = item.user_id
-  })
+  pointTableQueryItems.value.user_id = item.user_id
   $checkUserPoint.value?.open({
     showCancel: false,
     title: '积分变更记录',
     okText: '关闭',
+  })
+  nextTick(() => {
+    $pointTable.value.handleSearch()
   })
 }
 
@@ -549,7 +556,7 @@ const editUserPoint = ref({
 })
 function openSetPointModal() {
   editUserPoint.value = {
-    user_id: editUserPointUserId.value, // 用户id
+    user_id: pointTableQueryItems.value.user_id, // 用户id
     type: '0', // 类型
     point: '', // 积分
   }
@@ -575,9 +582,7 @@ function openSetPointModal() {
         }
       })
       await setUserPoint()
-      await api.getUserPointRecords(editUserPointUserId.value).then(({ data = [] }) => {
-        pointTableData.value = data.records
-      })
+      $pointTable.value.handleSearch()
     },
   })
 }
@@ -603,17 +608,18 @@ async function setUserPoint() {
 
 // 查看用户硬币变更列表
 const [$checkUserCoin] = useModal()
-const editUserCoinUserId = ref(0)
+const coinTableQueryItems = ref({
+  user_id: '',
+})
 function checkUserCoin(item = {}) {
-  coinTableData.value = []
-  api.getUserCoinRecords(item.user_id).then(({ data = [] }) => {
-    coinTableData.value = data.records
-    editUserCoinUserId.value = item.user_id
-  })
+  coinTableQueryItems.value.user_id = item.user_id
   $checkUserCoin.value?.open({
     showCancel: false,
     title: '硬币变更记录',
     okText: '关闭',
+  })
+  nextTick(() => {
+    $coinTable.value.handleSearch()
   })
 }
 
@@ -650,7 +656,7 @@ const editUserCoin = ref({
 })
 function openSetCoinModal() {
   editUserCoin.value = {
-    user_id: editUserCoinUserId.value, // 用户id
+    user_id: coinTableQueryItems.value.user_id, // 用户id
     type: '0', // 类型
     point: '', // 硬币
   }
@@ -676,9 +682,7 @@ function openSetCoinModal() {
         }
       })
       await setUserCoin()
-      await api.getUserCoinRecords(editUserCoinUserId.value).then(({ data = [] }) => {
-        coinTableData.value = data.records
-      })
+      $coinTable.value.handleSearch()
     },
   })
 }
