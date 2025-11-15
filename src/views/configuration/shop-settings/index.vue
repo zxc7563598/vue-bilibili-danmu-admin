@@ -337,12 +337,16 @@
                     <p class="mt-5">
                       若计算结果小于「最低返利积分」，则不为用户增加积分。
                     </p>
+                    <p class="mt-5">
+                      <b>注意：该功能仅在开启礼物记录时生效，若不开启礼物记录则无法生效</b>
+                    </p>
                   </div>
                 </template>
               </n-form-item>
               <n-form-item label="返利比例" path="rebate_proportion" class="mt-20">
                 <n-input
-                  v-model:value="configForm.rebate_proportion" type="text" :allow-input="onlyAllowDecimal" placeholder="数字类型，支持小数"
+                  v-model:value="configForm.rebate_proportion" type="text" :allow-input="onlyAllowDecimal"
+                  placeholder="数字类型，支持小数"
                 />
                 <template #feedback>
                   <div style="font-size: 12px; color: #888;">
@@ -352,7 +356,8 @@
               </n-form-item>
               <n-form-item label="最低返利积分" path="min_rebate_point" class="mt-20">
                 <n-input
-                  v-model:value="configForm.min_rebate_point" type="text" :allow-input="onlyAllowDecimal" placeholder="最低返利积分，用于限制返利生效的门槛"
+                  v-model:value="configForm.min_rebate_point" type="text" :allow-input="onlyAllowDecimal"
+                  placeholder="最低返利积分，用于限制返利生效的门槛"
                 />
                 <template #feedback>
                   <div style="font-size: 12px; color: #888;">
