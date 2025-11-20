@@ -169,6 +169,16 @@
                   </n-radio-button>
                 </n-radio-group>
               </n-form-item>
+              <n-form-item label="奖励类型" path="currency_type" feedback-style="margin-bottom: 20px;">
+                <n-radio-group v-model:value="checkInForm.currency_type" name="checkInForm-currency_type">
+                  <n-radio-button value="0">
+                    积分
+                  </n-radio-button>
+                  <n-radio-button value="1">
+                    硬币
+                  </n-radio-button>
+                </n-radio-group>
+              </n-form-item>
               <n-form-item label="签到词" path="keywords" feedback-style="margin-bottom: 20px;">
                 <n-input v-model:value="checkInForm.keywords" placeholder="一般建议增加符号避免误触发，例如: #签到" />
               </n-form-item>
@@ -1038,6 +1048,7 @@ const checkInForm = ref({
   opens: false, // 是否开启
   status: '0', // 状态
   type: '0', // 类型：0=全部感谢，1=仅感谢牌子，2=仅感谢航海
+  currency_type: '1', // 奖励类型：1=硬币，0=积分
   keywords: '', // 签到词
   points: '0', // 签到赠送积分
   select: '', // 查询词
@@ -1059,6 +1070,15 @@ const checkInRules = ref({
     validator(rule, value) {
       if (!value) {
         return new Error('[签到]请选择类型')
+      }
+      return true
+    },
+  },
+  currency_type: {
+    required: true,
+    validator(rule, value) {
+      if (!value) {
+        return new Error('[签到]请选择奖励类型')
       }
       return true
     },
@@ -1770,6 +1790,7 @@ async function getConfig() {
     checkInForm.value.opens = data.check_in.opens
     checkInForm.value.status = String(data.check_in.status)
     checkInForm.value.type = String(data.check_in.type)
+    checkInForm.value.currency_type = String(data.check_in.currency_type)
     checkInForm.value.keywords = data.check_in.keywords
     checkInForm.value.select = data.check_in.select
     checkInForm.value.points = data.check_in.points
