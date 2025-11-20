@@ -1790,7 +1790,7 @@ async function getConfig() {
     checkInForm.value.opens = data.check_in.opens
     checkInForm.value.status = String(data.check_in.status)
     checkInForm.value.type = String(data.check_in.type)
-    checkInForm.value.currency_type = String(data.check_in.currency_type)
+    checkInForm.value.currency_type = String(data.check_in.currency_type ?? 1)
     checkInForm.value.keywords = data.check_in.keywords
     checkInForm.value.select = data.check_in.select
     checkInForm.value.points = data.check_in.points
